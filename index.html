@@ -69,11 +69,84 @@
   <!-- Main content -->
   <main class="main-content" id="mainContent">
 
-    <!-- IAS 2 (default, active) -->
+    <!-- IAS 2: Inventory Workbench -->
     <section class="chapter-panel active" id="chapter-ias2">
-      <h1>IAS 2 — Inventories</h1>
-      <p class="chapter-intro">Inventory valuation, cost formulas, and net realisable value calculations.</p>
-      <div class="placeholder-card">📦 Inventory calculators coming soon — FIFO, LIFO, Weighted Average, and more.</div>
+      <div class="wb-header">
+        <div>
+          <h1>Inventory Management</h1>
+          <p class="chapter-intro">Track inventory transactions and automatically calculate inventory value, COGS, revenue and profit based on IAS 2 inventory costing methods.</p>
+        </div>
+        <div class="wb-method-selector">
+          <label for="costingMethod">Costing Method</label>
+          <div class="wb-select-wrapper">
+            <select id="costingMethod">
+              <option value="fifo">FIFO</option>
+              <option value="lifo">LIFO</option>
+              <option value="wa-periodic">Weighted Average (Periodic)</option>
+              <option value="wa-perpetual">Weighted Average (Perpetual)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Transaction Table -->
+      <div class="wb-table-wrapper">
+        <table class="wb-table" id="inventoryTable">
+          <thead>
+            <tr>
+              <th class="col-num">#</th>
+              <th class="col-type">Type</th>
+              <th class="col-date">Date</th>
+              <th class="col-price">Unit Price</th>
+              <th class="col-qty">Quantity</th>
+              <th class="col-txval">Transaction Value</th>
+              <th class="col-invqty">Inventory Quantity</th>
+              <th class="col-invval">Inventory Value</th>
+              <th class="col-del"></th>
+            </tr>
+          </thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </div>
+
+      <button class="wb-add-btn" id="addTransactionBtn">+ Add Transaction</button>
+
+      <!-- Inventory Layers (FIFO / LIFO) -->
+      <div class="wb-card wb-layers" id="layersSection" style="display:none">
+        <h3 class="wb-card-title">Remaining Inventory Layers</h3>
+        <table class="wb-layers-table" id="layersTable">
+          <thead><tr><th>Layer</th><th>Quantity</th><th>Unit Cost</th><th>Total Cost</th></tr></thead>
+          <tbody id="layersTableBody"></tbody>
+        </table>
+      </div>
+
+      <!-- Summary -->
+      <div class="wb-summary" id="summarySection">
+        <div class="wb-summary-item">
+          <span class="wb-summary-label">Ending Inventory Quantity</span>
+          <span class="wb-summary-value" id="sumEndQty">—</span>
+        </div>
+        <div class="wb-summary-item">
+          <span class="wb-summary-label">Ending Inventory Value</span>
+          <span class="wb-summary-value" id="sumEndVal">—</span>
+        </div>
+        <div class="wb-summary-item">
+          <span class="wb-summary-label">Revenue</span>
+          <span class="wb-summary-value" id="sumRevenue">—</span>
+        </div>
+        <div class="wb-summary-item">
+          <span class="wb-summary-label">COGS</span>
+          <span class="wb-summary-value" id="sumCOGS">—</span>
+        </div>
+        <div class="wb-summary-item">
+          <span class="wb-summary-label">Gross Profit</span>
+          <span class="wb-summary-value" id="sumGP">—</span>
+        </div>
+        <div class="wb-summary-item wb-summary-highlight">
+          <span class="wb-summary-label">Gross Margin %</span>
+          <span class="wb-summary-value" id="sumGM">—</span>
+        </div>
+      </div>
     </section>
 
     <!-- Placeholder panels for all other chapters -->
@@ -105,5 +178,6 @@
   </main>
 
   <script src="js/app.js"></script>
+  <script src="js/ias2-inventory.js"></script>
 </body>
 </html>

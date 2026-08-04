@@ -253,6 +253,349 @@ body {
   font-size: 1.1rem;
 }
 
+/* ==============================================
+   Inventory Workbench (IAS 2)
+   ============================================== */
+
+.wb-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+}
+
+.wb-method-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 240px;
+}
+
+.wb-method-selector label {
+  font-size: .75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  color: var(--color-text-light);
+}
+
+.wb-select-wrapper {
+  position: relative;
+}
+
+.wb-select-wrapper select,
+.wb-select {
+  width: 100%;
+  padding: 9px 32px 9px 12px;
+  font-size: .9rem;
+  font-family: inherit;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--color-text);
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M6 8L1 3h10z' fill='%2364748b'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  transition: border-color .15s, box-shadow .15s;
+}
+
+.wb-select-wrapper select:focus,
+.wb-select:focus {
+  outline: none;
+  border-color: #2563EB;
+  box-shadow: 0 0 0 3px rgba(37,99,235,.12);
+}
+
+/* ── Table ─────────────────────────────────── */
+.wb-table-wrapper {
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+  overflow-x: auto;
+  box-shadow: 0 1px 3px rgba(0,0,0,.04);
+}
+
+.wb-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .875rem;
+  min-width: 960px;
+}
+
+.wb-table thead th {
+  background: #F8FAFC;
+  color: #475569;
+  font-weight: 600;
+  font-size: .75rem;
+  text-transform: uppercase;
+  letter-spacing: .03em;
+  padding: 12px 12px;
+  border-bottom: 1px solid var(--color-border);
+  text-align: left;
+  white-space: nowrap;
+}
+
+.wb-table tbody td {
+  padding: 6px 8px;
+  border-bottom: 1px solid #f1f5f9;
+  vertical-align: middle;
+}
+
+.wb-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.wb-table tbody tr:hover {
+  background: #FAFBFC;
+}
+
+/* Column widths */
+.col-num  { width: 36px; text-align: center; color: #94a3b8; font-size: .8rem; }
+.col-type { width: 200px; }
+.col-date { width: 140px; }
+.col-price { width: 120px; }
+.col-qty  { width: 100px; }
+.col-txval { width: 140px; }
+.col-invqty { width: 140px; }
+.col-invval { width: 140px; }
+.col-del  { width: 40px; text-align: center; }
+
+/* ── Inputs inside cells ────────────────────── */
+.wb-table input[type="number"],
+.wb-table input[type="date"] {
+  width: 100%;
+  padding: 8px 8px;
+  font-size: .875rem;
+  font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, sans-serif;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--color-text);
+  transition: border-color .15s, background .15s, box-shadow .15s;
+}
+
+.wb-table input[type="number"]:hover,
+.wb-table input[type="date"]:hover {
+  border-color: #e2e8f0;
+}
+
+.wb-table input[type="number"]:focus,
+.wb-table input[type="date"]:focus {
+  outline: none;
+  border-color: #2563EB;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(37,99,235,.1);
+}
+
+.wb-table input:disabled {
+  color: #94a3b8;
+  background: #f8fafc;
+  cursor: not-allowed;
+  -webkit-text-fill-color: #94a3b8;
+}
+
+/* Select inside cells */
+.wb-table .wb-select {
+  width: 100%;
+  padding: 8px 28px 8px 8px;
+  font-size: .8rem;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background-color: transparent;
+  background-position: right 6px center;
+  cursor: pointer;
+}
+
+.wb-table .wb-select:hover {
+  border-color: #e2e8f0;
+}
+
+.wb-table .wb-select:focus {
+  outline: none;
+  border-color: #2563EB;
+  background-color: #fff;
+  box-shadow: 0 0 0 3px rgba(37,99,235,.1);
+}
+
+/* Computed (read-only) cells */
+.cell-computed {
+  font-variant-numeric: tabular-nums;
+  font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: .875rem;
+  color: #334155;
+  padding: 8px 12px !important;
+  white-space: nowrap;
+}
+
+td[data-field="invQty"],
+td[data-field="invVal"] {
+  font-weight: 500;
+}
+
+/* ── Delete button ──────────────────────────── */
+.wb-row-del {
+  background: none;
+  border: none;
+  color: #94a3b8;
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 4px;
+  line-height: 1;
+  transition: color .15s, background .15s;
+}
+
+.wb-row-del:hover {
+  color: #ef4444;
+  background: #fef2f2;
+}
+
+/* ── Add Button ─────────────────────────────── */
+.wb-add-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 12px;
+  padding: 10px 20px;
+  font-size: .875rem;
+  font-family: inherit;
+  font-weight: 500;
+  color: #2563EB;
+  background: #fff;
+  border: 1px dashed #2563EB;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background .15s, border-color .15s;
+}
+
+.wb-add-btn:hover {
+  background: #eff6ff;
+  border-color: #1d4ed8;
+}
+
+/* ── Summary ────────────────────────────────── */
+.wb-summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.wb-summary-item {
+  background: #fff;
+  border-radius: 12px;
+  padding: 18px 20px;
+  border: 1px solid var(--color-border);
+  box-shadow: 0 1px 3px rgba(0,0,0,.04);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.wb-summary-label {
+  font-size: .75rem;
+  color: #64748b;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: .03em;
+}
+
+.wb-summary-value {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #0f172a;
+  font-variant-numeric: tabular-nums;
+}
+
+.wb-summary-highlight {
+  border-left: 3px solid #2563EB;
+}
+
+/* ── Inventory Layers ───────────────────────── */
+.wb-layers {
+  margin-top: 24px;
+}
+
+.wb-card {
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+  padding: 20px 24px;
+  box-shadow: 0 1px 3px rgba(0,0,0,.04);
+}
+
+.wb-card-title {
+  font-size: .9rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 12px;
+}
+
+.wb-layers-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .85rem;
+}
+
+.wb-layers-table thead th {
+  background: #F8FAFC;
+  color: #64748b;
+  font-weight: 600;
+  font-size: .75rem;
+  text-transform: uppercase;
+  letter-spacing: .03em;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--color-border);
+  text-align: left;
+}
+
+.wb-layers-table tbody td {
+  padding: 9px 14px;
+  border-bottom: 1px solid #f1f5f9;
+  font-variant-numeric: tabular-nums;
+}
+
+.wb-layers-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.wb-layers-total td {
+  border-top: 2px solid #e2e8f0 !important;
+  border-bottom: none !important;
+  padding-top: 10px !important;
+  color: #0f172a;
+}
+
+/* ── Responsive tweaks for workbench ────────── */
+@media (max-width: 768px) {
+  .wb-header {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .wb-method-selector {
+    min-width: 100%;
+  }
+
+  .wb-table {
+    min-width: 800px;
+    font-size: .8rem;
+  }
+
+  .wb-summary {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .wb-summary-value {
+    font-size: 1.1rem;
+  }
+}
+
 /* --- Responsive --- */
 @media (max-width: 768px) {
   .sidebar {
