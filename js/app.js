@@ -8,6 +8,8 @@
   // --- Elements ---
   const sidebar = document.getElementById('sidebar');
   const menuToggle = document.getElementById('menuToggle');
+  const sidebarCollapseBtn = document.getElementById('sidebarCollapseBtn');
+  const sidebarExpandBtn = document.getElementById('sidebarExpandBtn');
   const chapterLinks = document.querySelectorAll('.chapter-link');
   const chapterPanels = document.querySelectorAll('.chapter-panel');
 
@@ -34,6 +36,23 @@
       p.classList.toggle('active', p.id === 'chapter-' + chapterId);
     });
   }
+
+  // --- Sidebar collapse (desktop) ---
+  sidebarCollapseBtn.addEventListener('click', function () {
+    sidebar.classList.add('collapsed');
+  });
+
+  sidebarExpandBtn.addEventListener('click', function () {
+    sidebar.classList.remove('collapsed');
+  });
+
+  // Keyboard shortcut: Ctrl+B to toggle sidebar
+  document.addEventListener('keydown', function (e) {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'b') {
+      e.preventDefault();
+      sidebar.classList.toggle('collapsed');
+    }
+  });
 
   // --- Mobile menu toggle ---
   menuToggle.addEventListener('click', function () {
