@@ -600,15 +600,44 @@ td[data-field="invVal"] {
   font-size: .9rem;
   font-weight: 700;
   color: #1e293b;
+  padding-bottom: 0;
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color .15s;
+}
+
+.wb-period-card-title:hover {
+  color: #2563EB;
+}
+
+.wb-period-arrow {
+  font-size: .75rem;
+  transition: transform .2s ease;
+  display: inline-block;
+  color: #94a3b8;
+}
+
+.wb-period-card.expanded .wb-period-arrow {
+  transform: rotate(90deg);
+}
+
+.wb-period-card.expanded .wb-period-card-title {
   margin-bottom: 14px;
   padding-bottom: 10px;
   border-bottom: 1px solid #f1f5f9;
 }
 
 .wb-period-metrics {
-  display: grid;
+  display: none;
   grid-template-columns: 1fr 1fr;
   gap: 6px 24px;
+}
+
+.wb-period-card.expanded .wb-period-metrics {
+  display: grid;
 }
 
 .wb-period-metric {
@@ -630,12 +659,6 @@ td[data-field="invVal"] {
   color: #0f172a;
   text-align: right;
   font-variant-numeric: tabular-nums;
-}
-
-.wb-period-sub {
-  font-size: .8rem;
-  color: #64748b;
-  font-weight: 500;
 }
 
 /* ── Intro Page ────────────────────────────── */

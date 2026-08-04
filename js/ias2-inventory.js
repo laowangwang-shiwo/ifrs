@@ -823,16 +823,19 @@
     }
 
     var html = '';
-    summaries.forEach(function (p) {
+    summaries.forEach(function (p, i) {
       var label = formatPeriodLabel(p.periodKey, currentMethod);
       html += '<div class="wb-period-card">';
-      html += '<div class="wb-period-card-title">' + label + '</div>';
+      html += '<div class="wb-period-card-title" onclick="this.parentElement.classList.toggle(\'expanded\')">';
+      html += '<span class="wb-period-arrow">▸</span> ' + label;
+      html += '</div>';
       html += '<div class="wb-period-metrics">';
-      html += buildMetric('Average Cost',       fmt(p.avgCost));
-      html += buildMetric('Revenue',            fmt(p.revenue));
-      html += buildMetric('COGS',               fmt(p.cogs));
-      html += buildMetric('Gross Profit',       fmt(p.grossProfit));
-      html += buildMetric('Ending Inventory',   fmtInt(p.endQty) + ' units<br><span class="wb-period-sub">' + fmt(p.endVal) + '</span>');
+      html += buildMetric('Average Cost',              fmt(p.avgCost));
+      html += buildMetric('Revenue',                   fmt(p.revenue));
+      html += buildMetric('COGS',                      fmt(p.cogs));
+      html += buildMetric('Gross Profit',              fmt(p.grossProfit));
+      html += buildMetric('Ending Inventory Quantity', fmtInt(p.endQty));
+      html += buildMetric('Ending Inventory Value',    fmt(p.endVal));
       html += '</div></div>';
     });
 
