@@ -1,6 +1,6 @@
 /* ==============================================
    IAS 2 — Inventory Workbench
-   FIFO / LIFO / Weighted Average (Periodic & Perpetual)
+   FIFO / LIFO / Average (Perpetual, Weekly, Monthly, Yearly)
    ============================================== */
 
 (function () {
@@ -37,7 +37,8 @@
 
   function onMethodChange() {
     currentMethod = methodSelect.value;
-    layersSection.style.display = (currentMethod === 'fifo' || currentMethod === 'lifo') ? '' : 'none';
+    var isLayered = currentMethod === 'fifo' || currentMethod === 'lifo';
+    layersSection.style.display = isLayered ? '' : 'none';
     recalcAndUpdate();
   }
 
@@ -89,6 +90,32 @@
   }
   function cloneLayers(lyrs) {
     return lyrs.map(function (l) { return { qty: l.qty, cost: l.cost }; });
+  }
+
+  // ── Period key functions ────────────────────
+
+  /** ISO Week: "2025-W01", "2026-W52" etc. */
+  function getISOWeekKey(dateStr) {
+    if (!dateStr) return '0000-W00';
+    var d = new Date(dateStr + 'T00:00:00');
+    if (isNaN(d.getTime())) return '0000-W00';
+    var day = d.getUTCDay() || 7;
+    // Move to Thursday of this week
+    d.setUTCDate(d.getUTCDate() + 4 - day);
+    var year = d.getUTCFullYear();
+    var jan1 = new Date(Date.UTC(year, 0, 1));
+    var weekNum = Math.ceil(((d - jan1) / 86400000 + 1) / 7);
+    return year + '-W' + String(weekNum).padStart(2, '0');
+  }
+
+  function getMonthKey(dateStr) {
+    if (!dateStr) return '0000-00';
+    return dateStr.slice(0, 7); // "2025-03"
+  }
+
+  function getYearKey(dateStr) {
+    if (!dateStr) return '0000';
+    return dateStr.slice(0, 4); // "2025"
   }
 
   // ── Calculation engines ──────────────────────
@@ -179,61 +206,110 @@
     return { results: results, layers: layers, totalRevenue: totalRevenue, totalCOGS: totalCOGS };
   }
 
-  function calcWAPeriodic() {
-    // First pass: compute single weighted average from all OPEN + PURCHASE
-    var totalAvailableCost = 0, totalAvailableUnits = 0;
-    transactions.forEach(function (tx) {
-      if (tx.type === 'OPEN' || tx.type === 'PURCHASE') {
-        var p = parseNum(tx.unitPrice);
-        var q = parseNum(tx.quantity);
-        totalAvailableCost += p * q;
-        totalAvailableUnits += q;
+  /**
+   * Generic Periodic Weighted Average.
+   * Groups transactions by period (week / month / year),
+   * computes period avgCost from (beginning inventory + period OPEN/PURCHASE),
+   * then applies that avgCost to all SALE/DAMAGE within the period.
+   *
+   * @param getPeriodKey  function(dateStr) → period key string
+   */
+  function calcPeriodicWA(getPeriodKey) {
+    // 1. Group transactions by period key, preserving original index
+    var groups = [];
+    var groupMap = {};
+
+    transactions.forEach(function (tx, idx) {
+      var key = getPeriodKey(tx.date);
+      if (!groupMap[key]) {
+        var g = { key: key, entries: [] };
+        groupMap[key] = g;
+        groups.push(g);
       }
+      groupMap[key].entries.push({ tx: tx, idx: idx });
     });
-    var avgCost = totalAvailableUnits > 0 ? totalAvailableCost / totalAvailableUnits : 0;
 
-    var runningQty = 0;
+    // 2. Sort groups by period key (chronological)
+    groups.sort(function (a, b) { return a.key < b.key ? -1 : a.key > b.key ? 1 : 0; });
+
+    // 3. Process each period
+    var resultMap = {};
+    var runningQty = 0, runningVal = 0;
     var totalRevenue = 0, totalCOGS = 0;
-    var cumulativeWriteDown = 0;
-    var results = [];
 
-    transactions.forEach(function (tx) {
-      var price = parseNum(tx.unitPrice);
-      var qty   = parseNum(tx.quantity);
-      var txVal = 0, cogs = 0;
+    groups.forEach(function (group) {
+      // Beginning inventory for this period = carry-over from previous period
+      var begQty = runningQty;
+      var begVal = runningVal;
 
-      if (tx.type === 'OPEN' || tx.type === 'PURCHASE') {
-        runningQty += qty;
-        txVal = price * qty;
-      } else if (tx.type === 'SALE') {
-        runningQty -= qty;
-        cogs = qty * avgCost;
-        txVal = price * qty;
-        totalRevenue += txVal;
-        totalCOGS += cogs;
-      } else if (tx.type === 'DAMAGE') {
-        runningQty -= qty;
-        cogs = qty * avgCost;
-        txVal = cogs;
-      } else if (tx.type === 'WRITE_DOWN') {
-        cumulativeWriteDown += price;
-        txVal = price;
-      }
+      // Gather period's OPEN + PURCHASE
+      var periodPurchQty = 0, periodPurchVal = 0;
+      group.entries.forEach(function (e) {
+        var t = e.tx;
+        if (t.type === 'OPEN' || t.type === 'PURCHASE') {
+          var p = parseNum(t.unitPrice), q = parseNum(t.quantity);
+          periodPurchQty += q;
+          periodPurchVal += p * q;
+        }
+      });
 
-      var invQty = runningQty;
-      var invVal = runningQty * avgCost - cumulativeWriteDown;
-      results.push({
-        id: tx.id,
-        txValue: txVal,
-        cogs: cogs,
-        revenue: tx.type === 'SALE' ? txVal : 0,
-        invQty: invQty,
-        invVal: invVal,
-        layers: []
+      // Period average cost
+      var availableQty = begQty + periodPurchQty;
+      var availableVal = begVal + periodPurchVal;
+      var avgCost = availableQty > 0 ? availableVal / availableQty : 0;
+
+      // Process each transaction in this period
+      group.entries.forEach(function (e) {
+        var tx = e.tx;
+        var price = parseNum(tx.unitPrice);
+        var qty   = parseNum(tx.quantity);
+        var txVal = 0, cogs = 0, revenue = 0;
+
+        if (tx.type === 'OPEN' || tx.type === 'PURCHASE') {
+          runningQty += qty;
+          runningVal += price * qty;
+          txVal = price * qty;
+        } else if (tx.type === 'SALE') {
+          cogs = qty * avgCost;
+          runningQty -= qty;
+          runningVal -= cogs;
+          txVal = price * qty;
+          revenue = txVal;
+          totalRevenue += revenue;
+          totalCOGS += cogs;
+        } else if (tx.type === 'DAMAGE') {
+          cogs = qty * avgCost;
+          runningQty -= qty;
+          runningVal -= cogs;
+          txVal = cogs;
+        } else if (tx.type === 'WRITE_DOWN') {
+          runningVal -= price;
+          txVal = price;
+        }
+
+        resultMap[tx.id] = {
+          id: tx.id,
+          txValue: txVal,
+          cogs: cogs,
+          revenue: revenue,
+          invQty: runningQty,
+          invVal: runningVal,
+          layers: []
+        };
       });
     });
 
-    return { results: results, layers: [], totalRevenue: totalRevenue, totalCOGS: totalCOGS, avgCost: avgCost };
+    // 4. Build results in original transaction order
+    var results = transactions.map(function (tx) { return resultMap[tx.id]; });
+
+    return {
+      results: results,
+      layers: [],
+      totalRevenue: totalRevenue,
+      totalCOGS: totalCOGS,
+      endQty: runningQty,   // final state after all periods processed
+      endVal: runningVal
+    };
   }
 
   function calcWAPerpetual() {
@@ -310,8 +386,10 @@
     switch (currentMethod) {
       case 'fifo':         return calcFIFO();
       case 'lifo':         return calcLIFO();
-      case 'wa-periodic':  return calcWAPeriodic();
       case 'wa-perpetual': return calcWAPerpetual();
+      case 'wa-weekly':    return calcPeriodicWA(getISOWeekKey);
+      case 'wa-monthly':   return calcPeriodicWA(getMonthKey);
+      case 'wa-yearly':    return calcPeriodicWA(getYearKey);
       default:             return calcFIFO();
     }
   }
@@ -510,14 +588,22 @@
 
   /** Update summary section */
   function updateSummary(calcResult) {
-    var last = calcResult.results.length > 0 ? calcResult.results[calcResult.results.length - 1] : null;
+    // Use explicit end state (calcPeriodicWA) or last result's state
+    var endQty = calcResult.endQty;
+    var endVal = calcResult.endVal;
+    if (endQty == null) {
+      var last = calcResult.results.length > 0 ? calcResult.results[calcResult.results.length - 1] : null;
+      endQty = last ? last.invQty : null;
+      endVal = last ? last.invVal : null;
+    }
+
     var revenue = calcResult.totalRevenue;
     var cogs = calcResult.totalCOGS;
     var gp = revenue - cogs;
     var gm = revenue > 0 ? (gp / revenue) * 100 : 0;
 
-    sumEndQty.textContent  = last ? fmtInt(last.invQty) : '—';
-    sumEndVal.textContent  = last ? fmt(last.invVal) : '—';
+    sumEndQty.textContent  = fmtInt(endQty);
+    sumEndVal.textContent  = fmt(endVal);
     sumRevenue.textContent = fmt(revenue);
     sumCOGS.textContent    = fmt(cogs);
     sumGP.textContent      = fmt(gp);
