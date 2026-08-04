@@ -91,10 +91,24 @@
             <strong>IAS 1 — Investment Analysis</strong>
             <ul>
               <li>Cash Flow Schedule with editable year/cash flow table</li>
-              <li>Discount Rate assumption (auto-recalculate on change)</li>
+              <li>Discount Rate assumption — auto-recalculate on change</li>
               <li>NPV, IRR (Newton-Raphson solver), Payback Period, DCF Value</li>
-              <li>Cash Flow Timeline — red/green bar chart</li>
+              <li>Cash Flow Timeline — red/green horizontal bar chart</li>
+              <li>Year 0 row locked (cannot delete); rows auto-renumber after deletion</li>
               <li>Warning banner for unsolvable IRR or unreached payback</li>
+            </ul>
+          </div>
+        </div>
+        <div class="changelog-entry">
+          <span class="changelog-date">2026-08-05</span>
+          <span class="changelog-ver">v0.4.1</span>
+          <div class="changelog-body">
+            <strong>Minor Fixes</strong>
+            <ul>
+              <li>ISO week calculation — use Date.UTC for timezone-safe local dates</li>
+              <li>Full-width layout — removed max-width constraint</li>
+              <li>Period Summary — collapsible cards, split Ending Inventory into Qty + Value</li>
+              <li>Intro page — meme image, changelog, Home sidebar link</li>
             </ul>
           </div>
         </div>
