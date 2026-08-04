@@ -144,16 +144,21 @@
       var qty   = parseNum(tx.quantity);
       var txVal = 0, cogs = 0;
 
+      var shortfall = 0;
       if (tx.type === 'OPEN' || tx.type === 'PURCHASE') {
         layers.push({ qty: qty, cost: price });
         txVal = price * qty;
       } else if (tx.type === 'SALE') {
-        cogs = depleteLayers(layers, qty, 'oldest');
+        var r = depleteLayers(layers, qty, 'oldest');
+        cogs = r.cost;
+        shortfall = r.shortfall;
         txVal = price * qty;
         totalRevenue += txVal;
         totalCOGS += cogs;
       } else if (tx.type === 'DAMAGE') {
-        cogs = depleteLayers(layers, qty, 'oldest');
+        var rd = depleteLayers(layers, qty, 'oldest');
+        cogs = rd.cost;
+        shortfall = rd.shortfall;
         txVal = cogs;
       } else if (tx.type === 'WRITE_DOWN') {
         cumulativeWD += price;
@@ -169,6 +174,7 @@
         revenue: tx.type === 'SALE' ? txVal : 0,
         invQty: invQty,
         invVal: invVal,
+        shortfall: shortfall,
         layers: cloneLayers(layers)
       });
     });
@@ -187,16 +193,21 @@
       var qty   = parseNum(tx.quantity);
       var txVal = 0, cogs = 0;
 
+      var shortfall = 0;
       if (tx.type === 'OPEN' || tx.type === 'PURCHASE') {
         layers.push({ qty: qty, cost: price });
         txVal = price * qty;
       } else if (tx.type === 'SALE') {
-        cogs = depleteLayers(layers, qty, 'newest');
+        var r = depleteLayers(layers, qty, 'newest');
+        cogs = r.cost;
+        shortfall = r.shortfall;
         txVal = price * qty;
         totalRevenue += txVal;
         totalCOGS += cogs;
       } else if (tx.type === 'DAMAGE') {
-        cogs = depleteLayers(layers, qty, 'newest');
+        var rd = depleteLayers(layers, qty, 'newest');
+        cogs = rd.cost;
+        shortfall = rd.shortfall;
         txVal = cogs;
       } else if (tx.type === 'WRITE_DOWN') {
         cumulativeWD += price;
@@ -212,6 +223,7 @@
         revenue: tx.type === 'SALE' ? txVal : 0,
         invQty: invQty,
         invVal: invVal,
+        shortfall: shortfall,
         layers: cloneLayers(layers)
       });
     });
@@ -377,7 +389,7 @@
    * @param layers  Array of {qty, cost}
    * @param qty     Quantity to deplete
    * @param order   'oldest' (FIFO) or 'newest' (LIFO)
-   * @returns Total cost of depleted units
+   * @returns {{cost: number, shortfall: number}} Cost of depleted units + unfulfilled quantity
    */
   function depleteLayers(layers, qty, order) {
     var remaining = qty;
@@ -391,7 +403,7 @@
       remaining -= taken;
       if (layer.qty <= 0) layers.splice(idx, 1);
     }
-    return totalCost;
+    return { cost: totalCost, shortfall: remaining };
   }
 
   // ── Master recalculation ─────────────────────
@@ -519,22 +531,30 @@
   }
 
   /**
-   * Validate inventory: flag rows where inventory quantity went negative.
+   * Validate inventory: flag rows where inventory went negative (WA methods)
+   * or where sale/damage exceeded available stock — shortfall (FIFO/LIFO).
    */
   function validateInventory(calcResult) {
+    var hasIssue = false;
+    var hasShortfall = false;
     var hasNegative = false;
     var rows = tableBody.querySelectorAll('tr');
     rows.forEach(function (row) {
       var id = parseInt(row.getAttribute('data-id'));
       var res = findResultById(calcResult, id);
-      if (res && res.invQty < 0) {
+      if (!res) return;
+
+      var isBad = (res.invQty < 0) || (res.shortfall > 0);
+      if (isBad) {
         row.classList.add('wb-row-inv-error');
-        hasNegative = true;
+        hasIssue = true;
+        if (res.invQty < 0) hasNegative = true;
+        if (res.shortfall > 0) hasShortfall = true;
       } else {
         row.classList.remove('wb-row-inv-error');
       }
     });
-    return hasNegative;
+    return { hasIssue: hasIssue, hasNegative: hasNegative, hasShortfall: hasShortfall };
   }
 
   function showWarning(messages) {
@@ -753,10 +773,13 @@
 
     // Validation (non-blocking — errors are visual only)
     validateAllDates();
-    var hasNegative = validateInventory(result);
+    var invResult = validateInventory(result);
 
     var warnings = [];
-    if (hasNegative) {
+    if (invResult.hasShortfall) {
+      warnings.push('<strong>⚠ Insufficient inventory.</strong> Sale or damage quantity exceeds available stock. The excess units were not fulfilled — review transaction quantities.');
+    }
+    if (invResult.hasNegative) {
       warnings.push('<strong>⚠ Negative inventory detected.</strong> Some transactions have caused inventory quantity to drop below zero. Review sale and damage quantities.');
     }
     showWarning(warnings);
