@@ -1,0 +1,222 @@
+/* ==============================================
+   IFRS Calculator — Styles
+   ============================================== */
+
+/* --- Reset & Base --- */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --sidebar-width: 300px;
+  --color-bg: #f5f6f8;
+  --color-sidebar: #1e293b;
+  --color-sidebar-hover: #334155;
+  --color-sidebar-active: #3b82f6;
+  --color-text: #1e293b;
+  --color-text-light: #64748b;
+  --color-border: #e2e8f0;
+  --color-card: #ffffff;
+  --color-primary: #3b82f6;
+  --color-primary-light: #eff6ff;
+  --radius: 8px;
+  --shadow: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+}
+
+html, body {
+  height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color: var(--color-text);
+  background: var(--color-bg);
+}
+
+/* --- Layout --- */
+body {
+  display: flex;
+}
+
+/* --- Sidebar --- */
+.sidebar {
+  width: var(--sidebar-width);
+  min-width: var(--sidebar-width);
+  height: 100vh;
+  background: var(--color-sidebar);
+  color: #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  position: sticky;
+  top: 0;
+}
+
+.sidebar-header {
+  padding: 20px 20px 12px;
+  border-bottom: 1px solid rgba(255,255,255,.1);
+}
+
+.sidebar-header h2 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: #ffffff;
+}
+
+/* --- Chapter Navigation --- */
+.chapter-nav {
+  flex: 1;
+  padding: 8px 0;
+}
+
+.nav-section {
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+
+.nav-section-title {
+  width: 100%;
+  background: none;
+  border: none;
+  color: #94a3b8;
+  font-size: .75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  padding: 12px 20px 6px;
+  cursor: pointer;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color .15s;
+}
+
+.nav-section-title:hover {
+  color: #cbd5e1;
+}
+
+.section-arrow {
+  font-size: .65rem;
+  transition: transform .2s;
+}
+
+.nav-section-title.collapsed .section-arrow {
+  transform: rotate(-90deg);
+}
+
+.nav-section-items {
+  display: flex;
+  flex-direction: column;
+  padding: 2px 0 8px;
+}
+
+.nav-section-title.collapsed + .nav-section-items {
+  display: none;
+}
+
+.chapter-link {
+  display: block;
+  padding: 7px 20px 7px 28px;
+  color: #cbd5e1;
+  text-decoration: none;
+  font-size: .85rem;
+  border-left: 3px solid transparent;
+  transition: all .15s;
+}
+
+.chapter-link:hover {
+  background: var(--color-sidebar-hover);
+  color: #fff;
+}
+
+.chapter-link.active {
+  background: rgba(59,130,246,.15);
+  color: #60a5fa;
+  border-left-color: var(--color-primary);
+  font-weight: 500;
+}
+
+/* --- Mobile Menu Toggle --- */
+.menu-toggle {
+  display: none;
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 100;
+  background: var(--color-sidebar);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  padding: 8px 12px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+}
+
+/* --- Main Content --- */
+.main-content {
+  flex: 1;
+  padding: 40px 48px;
+  max-width: 960px;
+  overflow-y: auto;
+  height: 100vh;
+}
+
+/* --- Chapter Panels --- */
+.chapter-panel {
+  display: none;
+}
+
+.chapter-panel.active {
+  display: block;
+}
+
+.chapter-panel h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+  letter-spacing: -0.02em;
+}
+
+.chapter-intro {
+  color: var(--color-text-light);
+  font-size: .95rem;
+  margin-bottom: 32px;
+}
+
+/* --- Placeholder --- */
+.placeholder-card {
+  background: var(--color-card);
+  border: 2px dashed var(--color-border);
+  border-radius: var(--radius);
+  padding: 48px 24px;
+  text-align: center;
+  color: var(--color-text-light);
+  font-size: 1.1rem;
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 99;
+    transform: translateX(-100%);
+    transition: transform .25s ease;
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  .main-content {
+    padding: 24px 16px;
+    padding-top: 56px;
+    max-width: 100%;
+  }
+}

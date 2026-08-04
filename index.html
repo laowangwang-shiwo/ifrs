@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IFRS Calculator</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <h2>IFRS Calculator</h2>
+    </div>
+
+    <nav class="chapter-nav">
+      <!-- IAS Section -->
+      <div class="nav-section">
+        <button class="nav-section-title" onclick="this.classList.toggle('collapsed')">
+          <span class="section-arrow">▾</span> IAS Standards
+        </button>
+        <div class="nav-section-items">
+          <a href="#" class="chapter-link" data-chapter="ias1">IAS 1 — Presentation of Financial Statements</a>
+          <a href="#" class="chapter-link active" data-chapter="ias2">IAS 2 — Inventories</a>
+          <a href="#" class="chapter-link" data-chapter="ias7">IAS 7 — Statement of Cash Flows</a>
+          <a href="#" class="chapter-link" data-chapter="ias8">IAS 8 — Accounting Policies & Estimates</a>
+          <a href="#" class="chapter-link" data-chapter="ias10">IAS 10 — Events After Reporting Period</a>
+          <a href="#" class="chapter-link" data-chapter="ias12">IAS 12 — Income Taxes</a>
+          <a href="#" class="chapter-link" data-chapter="ias16">IAS 16 — Property, Plant & Equipment</a>
+          <a href="#" class="chapter-link" data-chapter="ias19">IAS 19 — Employee Benefits</a>
+          <a href="#" class="chapter-link" data-chapter="ias21">IAS 21 — Foreign Exchange Rates</a>
+          <a href="#" class="chapter-link" data-chapter="ias23">IAS 23 — Borrowing Costs</a>
+          <a href="#" class="chapter-link" data-chapter="ias33">IAS 33 — Earnings Per Share</a>
+          <a href="#" class="chapter-link" data-chapter="ias36">IAS 36 — Impairment of Assets</a>
+          <a href="#" class="chapter-link" data-chapter="ias37">IAS 37 — Provisions & Contingencies</a>
+          <a href="#" class="chapter-link" data-chapter="ias38">IAS 38 — Intangible Assets</a>
+          <a href="#" class="chapter-link" data-chapter="ias40">IAS 40 — Investment Property</a>
+          <a href="#" class="chapter-link" data-chapter="ias41">IAS 41 — Agriculture</a>
+        </div>
+      </div>
+
+      <!-- IFRS Section -->
+      <div class="nav-section">
+        <button class="nav-section-title" onclick="this.classList.toggle('collapsed')">
+          <span class="section-arrow">▾</span> IFRS Standards
+        </button>
+        <div class="nav-section-items">
+          <a href="#" class="chapter-link" data-chapter="ifrs2">IFRS 2 — Share-based Payment</a>
+          <a href="#" class="chapter-link" data-chapter="ifrs3">IFRS 3 — Business Combinations</a>
+          <a href="#" class="chapter-link" data-chapter="ifrs5">IFRS 5 — Non-current Assets Held for Sale</a>
+          <a href="#" class="chapter-link" data-chapter="ifrs6">IFRS 6 — Mineral Resources</a>
+          <a href="#" class="chapter-link" data-chapter="ifrs9">IFRS 9 — Financial Instruments</a>
+          <a href="#" class="chapter-link" data-chapter="ifrs10">IFRS 10 — Consolidated Financial Statements</a>
+          <a href="#" class="chapter-link" data-chapter="ifrs13">IFRS 13 — Fair Value Measurement</a>
+          <a href="#" class="chapter-link" data-chapter="ifrs15">IFRS 15 — Revenue from Contracts</a>
+          <a href="#" class="chapter-link" data-chapter="ifrs16">IFRS 16 — Leases</a>
+        </div>
+      </div>
+    </nav>
+  </aside>
+
+  <!-- Mobile menu toggle -->
+  <button class="menu-toggle" id="menuToggle" aria-label="Toggle sidebar">☰</button>
+
+  <!-- Main content -->
+  <main class="main-content" id="mainContent">
+
+    <!-- IAS 2 (default, active) -->
+    <section class="chapter-panel active" id="chapter-ias2">
+      <h1>IAS 2 — Inventories</h1>
+      <p class="chapter-intro">Inventory valuation, cost formulas, and net realisable value calculations.</p>
+      <div class="placeholder-card">📦 Inventory calculators coming soon — FIFO, LIFO, Weighted Average, and more.</div>
+    </section>
+
+    <!-- Placeholder panels for all other chapters -->
+    <section class="chapter-panel" id="chapter-ias1"><h1>IAS 1 — Presentation of Financial Statements</h1><div class="placeholder-card">📄 Coming soon</div></section>
+    <section class="chapter-panel" id="chapter-ias7"><h1>IAS 7 — Statement of Cash Flows</h1><div class="placeholder-card">💵 Coming soon</div></section>
+    <section class="chapter-panel" id="chapter-ias8"><h1>IAS 8 — Accounting Policies, Changes in Estimates & Errors</h1><div class="placeholder-card">📋 Coming soon</div></section>
+    <section class="chapter-panel" id="chapter-ias10"><h1>IAS 10 — Events After the Reporting Period</h1><div class="placeholder-card">📅 Coming soon</div></section>
+    <section class="chapter-panel" id="chapter-ias12"><h1>IAS 12 — Income Taxes</h1><div class="placeholder-card">💰 Coming soon</div></section>
+    <section class="chapter-panel" id="chapter-ias16"><h1>IAS 16 — Property, Plant & Equipment</h1><div class="placeholder-card">🏭 Coming soon</div></section>
+    <section class="chapter-panel" id="chapter-ias19"><h1>IAS 19 — Employee Benefits</h1><div class="placeholder-card">👥 Coming soon</div></section>
+    <section class="chapter-panel" id="chapter-ias21"><h1>IAS 21 — The Effects of Changes in Foreign Exchange Rates</h1><div class="placeholder-card">💱 Coming soon</div></section>
+    <section class="chapter-panel" id="chapter-ias23"><h1>IAS 23 — Borrowing Costs</h1><div class="placeholder-card">🏦 Coming soon</div></section>
+    <section class="chapter-panel" id="chapter-ias33"><h1>IAS 33 — Earnings Per Share</h1><div class="placeholder-card">📊 Coming soon</div></section>
+    <section class="chapter-panel" id="chapter-ias36"><h1>IAS 36 — Impairment of Assets</h1><div class="placeholder-card">⚠️ Coming soon</div></section>
+    <section class="chapter-panel" id="chapter-ias37"><h1>IAS 37 — Provisions, Contingent Liabilities & Assets</h1><div class="placeholder-card">🔮 Coming soon</div></section>
+    <section class="chapter-panel" id="chapter-ias38"><h1>IAS 38 — Intangible Assets</h1><div class="placeholder-card">💡 Coming soon</div></section>
+    <section class="chapter-panel" id="chapter-ias40"><h1>IAS 40 — Investment Property</h1><div class="placeholder-card">🏢 Coming soon</div></section>
+    <section class="chapter-panel" id="chapter-ias41"><h1>IAS 41 — Agriculture</h1><div class="placeholder-card">🌾 Coming soon</div></section>
+    <section class="chapter-panel" id="chapter-ifrs2"><h1>IFRS 2 — Share-based Payment</h1><div class="placeholder-card">📝 Coming soon</div></section>
+    <section class="chapter-panel" id="chapter-ifrs3"><h1>IFRS 3 — Business Combinations</h1><div class="placeholder-card">🤝 Coming soon</div></section>
+    <section class="chapter-panel" id="chapter-ifrs5"><h1>IFRS 5 — Non-current Assets Held for Sale</h1><div class="placeholder-card">🏷️ Coming soon</div></section>
+    <section class="chapter-panel" id="chapter-ifrs6"><h1>IFRS 6 — Exploration for Mineral Resources</h1><div class="placeholder-card">⛏️ Coming soon</div></section>
+    <section class="chapter-panel" id="chapter-ifrs9"><h1>IFRS 9 — Financial Instruments</h1><div class="placeholder-card">💹 Coming soon</div></section>
+    <section class="chapter-panel" id="chapter-ifrs10"><h1>IFRS 10 — Consolidated Financial Statements</h1><div class="placeholder-card">🏛️ Coming soon</div></section>
+    <section class="chapter-panel" id="chapter-ifrs13"><h1>IFRS 13 — Fair Value Measurement</h1><div class="placeholder-card">⚖️ Coming soon</div></section>
+    <section class="chapter-panel" id="chapter-ifrs15"><h1>IFRS 15 — Revenue from Contracts with Customers</h1><div class="placeholder-card">📑 Coming soon</div></section>
+    <section class="chapter-panel" id="chapter-ifrs16"><h1>IFRS 16 — Leases</h1><div class="placeholder-card">🔑 Coming soon</div></section>
+
+  </main>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
