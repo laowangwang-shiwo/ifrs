@@ -571,6 +571,69 @@ td[data-field="invVal"] {
   color: #0f172a;
 }
 
+/* ── Validation Errors ──────────────────────── */
+
+/* Date input error */
+.wb-table input.wb-input-error {
+  border-color: #ef4444 !important;
+  background: #fef2f2 !important;
+}
+
+.wb-table input.wb-input-error:focus {
+  box-shadow: 0 0 0 3px rgba(239,68,68,.15) !important;
+  border-color: #ef4444 !important;
+}
+
+/* Negative inventory row */
+.wb-table tbody tr.wb-row-inv-error {
+  background: #fef2f2;
+}
+
+.wb-table tbody tr.wb-row-inv-error:hover {
+  background: #feeaea;
+}
+
+.wb-table tbody tr.wb-row-inv-error .cell-computed[data-field="invQty"],
+.wb-table tbody tr.wb-row-inv-error .cell-computed[data-field="invVal"] {
+  color: #dc2626;
+  font-weight: 600;
+}
+
+/* Warning banner */
+.wb-warning-banner {
+  display: none;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 16px;
+  padding: 14px 18px;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 10px;
+  color: #991b1b;
+  font-size: .875rem;
+  line-height: 1.5;
+}
+
+.wb-warning-banner.visible {
+  display: flex;
+}
+
+.wb-warning-icon {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.wb-warning-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.wb-warning-text strong {
+  font-weight: 600;
+}
+
 /* ── Responsive tweaks for workbench ────────── */
 @media (max-width: 768px) {
   .wb-header {

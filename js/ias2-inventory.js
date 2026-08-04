@@ -47,11 +47,14 @@
   }
 
   function addTransaction(type) {
-    var today = new Date().toISOString().slice(0, 10);
+    // Inherit date from the last transaction, or use today
+    var lastDate = transactions.length > 0
+      ? transactions[transactions.length - 1].date
+      : new Date().toISOString().slice(0, 10);
     var tx = {
       id: nextId++,
       type: type,
-      date: today,
+      date: lastDate,
       unitPrice: type === 'DAMAGE' ? '' : '',
       quantity:  type === 'WRITE_DOWN' ? '' : ''
     };
@@ -493,40 +496,75 @@
   }
 
   /**
-   * Enforce date-chain rule: each row's date must be >= previous row's date.
-   * If a row's date is earlier, clamp it to the previous row's date.
-   * Then cascade forward: push downstream rows' dates up if they now violate.
+   * Validate date chain: each row's date must be >= previous row's date.
+   * Does NOT modify data — only marks errors visually.
    */
-  function enforceDateChain(changedIdx) {
-    // Backward check: clamp to previous row
-    if (changedIdx > 0) {
-      var prevDate = transactions[changedIdx - 1].date;
-      if (transactions[changedIdx].date < prevDate) {
-        transactions[changedIdx].date = prevDate;
-      }
-    }
-
-    // Forward cascade: ensure each row >= its predecessor
-    for (var i = changedIdx + 1; i < transactions.length; i++) {
-      var prev = transactions[i - 1].date;
-      if (transactions[i].date < prev) {
-        transactions[i].date = prev;
-      }
-    }
-
-    // Refresh all date inputs to reflect adjusted values
+  function validateAllDates() {
     var rows = tableBody.querySelectorAll('tr');
     rows.forEach(function (row) {
       var id = parseInt(row.getAttribute('data-id'));
-      var tx = null;
-      for (var j = 0; j < transactions.length; j++) {
-        if (transactions[j].id === id) { tx = transactions[j]; break; }
-      }
-      if (tx) {
-        var dateInput = row.querySelector('td.col-date input');
-        if (dateInput) dateInput.value = tx.date;
+      var tx = findTxById(id);
+      var idx = transactions.indexOf(tx);
+      var inp = row.querySelector('td.col-date input');
+      if (!inp || !tx) return;
+
+      if (idx > 0 && tx.date < transactions[idx - 1].date) {
+        inp.classList.add('wb-input-error');
+        inp.title = 'Transaction date cannot be earlier than the previous row.';
+      } else {
+        inp.classList.remove('wb-input-error');
+        inp.title = '';
       }
     });
+  }
+
+  /**
+   * Validate inventory: flag rows where inventory quantity went negative.
+   */
+  function validateInventory(calcResult) {
+    var hasNegative = false;
+    var rows = tableBody.querySelectorAll('tr');
+    rows.forEach(function (row) {
+      var id = parseInt(row.getAttribute('data-id'));
+      var res = findResultById(calcResult, id);
+      if (res && res.invQty < 0) {
+        row.classList.add('wb-row-inv-error');
+        hasNegative = true;
+      } else {
+        row.classList.remove('wb-row-inv-error');
+      }
+    });
+    return hasNegative;
+  }
+
+  function showWarning(messages) {
+    var banner = document.getElementById('validationWarning');
+    var textEl = document.getElementById('validationWarningText');
+    if (!banner || !textEl) return;
+
+    if (messages.length === 0) {
+      banner.classList.remove('visible');
+      return;
+    }
+
+    textEl.innerHTML = messages.map(function (m) {
+      return '<span>' + m + '</span>';
+    }).join('');
+    banner.classList.add('visible');
+  }
+
+  function findTxById(id) {
+    for (var i = 0; i < transactions.length; i++) {
+      if (transactions[i].id === id) return transactions[i];
+    }
+    return null;
+  }
+
+  function findResultById(calcResult, id) {
+    for (var i = 0; i < calcResult.results.length; i++) {
+      if (calcResult.results[i].id === id) return calcResult.results[i];
+    }
+    return null;
   }
 
   function buildDateCell(tx) {
@@ -536,12 +574,7 @@
     inp.value = tx.date;
     inp.addEventListener('change', function () {
       tx.date = inp.value;
-      var idx = -1;
-      for (var i = 0; i < transactions.length; i++) {
-        if (transactions[i].id === tx.id) { idx = i; break; }
-      }
-      enforceDateChain(idx);
-      recalcAndUpdate();
+      recalcAndUpdate(); // validation happens inside recalcAndUpdate
     });
     td.appendChild(inp);
     return td;
@@ -717,6 +750,16 @@
     updateComputed(result);
     updateSummary(result);
     updateLayers(result);
+
+    // Validation (non-blocking — errors are visual only)
+    validateAllDates();
+    var hasNegative = validateInventory(result);
+
+    var warnings = [];
+    if (hasNegative) {
+      warnings.push('<strong>⚠ Negative inventory detected.</strong> Some transactions have caused inventory quantity to drop below zero. Review sale and damage quantities.');
+    }
+    showWarning(warnings);
   }
 
   // ── Utility ──────────────────────────────────
