@@ -246,17 +246,55 @@
     var btn = document.createElement('button');
     btn.className = 'wb-row-del';
     btn.textContent = '×';
-    btn.title = 'Remove';
+    btn.title = cf.year === 0 ? 'Year 0 cannot be removed' : 'Remove';
+    if (cf.year === 0) {
+      btn.style.opacity = '0.25';
+      btn.style.cursor = 'not-allowed';
+    }
     btn.addEventListener('click', function () {
+      if (cf.year === 0) return;        // Year 0 is mandatory
       if (cashFlows.length <= 1) return;
       tr.remove();
       cashFlows = cashFlows.filter(function (c) { return c.id !== cf.id; });
+      renumberRows();
       recalcAll();
     });
     tdDel.appendChild(btn);
     tr.appendChild(tdDel);
 
     cfBody.appendChild(tr);
+  }
+
+  /**
+   * Renumber all rows: Year 0, 1, 2, ... consecutively.
+   * Updates both the data model and the displayed year cells.
+   */
+  function renumberRows() {
+    var rows = cfBody.querySelectorAll('tr');
+    rows.forEach(function (row, i) {
+      var id = parseInt(row.getAttribute('data-id'));
+      var cf = null;
+      for (var j = 0; j < cashFlows.length; j++) {
+        if (cashFlows[j].id === id) { cf = cashFlows[j]; break; }
+      }
+      if (cf) cf.year = i;
+      // Update display
+      var yearCell = row.querySelector('td.col-num');
+      if (yearCell) yearCell.textContent = i;
+      // Update delete button: only Year 0 is protected
+      var delBtn = row.querySelector('.wb-row-del');
+      if (delBtn) {
+        if (i === 0) {
+          delBtn.style.opacity = '0.25';
+          delBtn.style.cursor = 'not-allowed';
+          delBtn.title = 'Year 0 cannot be removed';
+        } else {
+          delBtn.style.opacity = '';
+          delBtn.style.cursor = '';
+          delBtn.title = 'Remove';
+        }
+      }
+    });
   }
 
   // ── Start ────────────────────────────────────
