@@ -638,6 +638,81 @@ td[data-field="invVal"] {
   font-weight: 500;
 }
 
+/* ── Intro Page ────────────────────────────── */
+.intro-image {
+  text-align: center;
+  margin: 28px 0;
+}
+
+.intro-image img {
+  max-width: 100%;
+  max-height: 420px;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+}
+
+/* ── Changelog ─────────────────────────────── */
+.wb-changelog {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.changelog-entry {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  padding: 16px 20px;
+  background: #fff;
+  border-bottom: 1px solid #f1f5f9;
+  align-items: baseline;
+}
+
+.changelog-entry:last-child {
+  border-bottom: none;
+}
+
+.changelog-date {
+  font-size: .8rem;
+  color: #64748b;
+  font-weight: 500;
+  min-width: 85px;
+}
+
+.changelog-ver {
+  font-size: .75rem;
+  font-weight: 600;
+  color: #2563EB;
+  background: #eff6ff;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-family: "SF Mono", "Consolas", monospace;
+}
+
+.changelog-body {
+  flex: 1 1 100%;
+  font-size: .875rem;
+  color: #334155;
+  line-height: 1.6;
+}
+
+.changelog-body strong {
+  color: #1e293b;
+}
+
+.changelog-body ul {
+  margin: 6px 0 0 18px;
+  padding: 0;
+}
+
+.changelog-body li {
+  margin-bottom: 3px;
+}
+
 /* ── Validation Errors ──────────────────────── */
 
 /* Date input error */

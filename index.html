@@ -15,6 +15,9 @@
     </div>
 
     <nav class="chapter-nav">
+      <!-- Home -->
+      <a href="#" class="chapter-link active" data-chapter="intro">🏠 Home</a>
+
       <!-- IAS Section -->
       <div class="nav-section">
         <button class="nav-section-title" onclick="this.classList.toggle('collapsed')">
@@ -22,7 +25,7 @@
         </button>
         <div class="nav-section-items">
           <a href="#" class="chapter-link" data-chapter="ias1">IAS 1 — Presentation of Financial Statements</a>
-          <a href="#" class="chapter-link active" data-chapter="ias2">IAS 2 — Inventories</a>
+          <a href="#" class="chapter-link" data-chapter="ias2">IAS 2 — Inventories</a>
           <a href="#" class="chapter-link" data-chapter="ias7">IAS 7 — Statement of Cash Flows</a>
           <a href="#" class="chapter-link" data-chapter="ias8">IAS 8 — Accounting Policies & Estimates</a>
           <a href="#" class="chapter-link" data-chapter="ias10">IAS 10 — Events After Reporting Period</a>
@@ -69,8 +72,63 @@
   <!-- Main content -->
   <main class="main-content" id="mainContent">
 
+    <!-- Intro -->
+    <section class="chapter-panel active" id="chapter-intro">
+      <h1>IFRS Calculator</h1>
+      <p class="chapter-intro">
+        hello，如果你不知为何误入这个网页，恭喜你什么都没有得到，这里是一个简单的会计计算器，用于练习国际准则和USGAAP准则下的会计计算。希望你能喜欢。
+      </p>
+      <div class="intro-image">
+        <img src="meme.png" alt="meme">
+      </div>
+
+      <h2>更新日志</h2>
+      <div class="wb-changelog">
+        <div class="changelog-entry">
+          <span class="changelog-date">2026-08-04</span>
+          <span class="changelog-ver">v0.3</span>
+          <div class="changelog-body">
+            <strong>Validation &amp; Period Summary</strong>
+            <ul>
+              <li>Date-chain validation — red border on out-of-order dates (no input blocking)</li>
+              <li>Negative inventory &amp; shortfall detection with warning banner</li>
+              <li>Period Summary cards for Average (Weekly/Monthly/Yearly) methods</li>
+              <li>New rows inherit date from previous row</li>
+            </ul>
+          </div>
+        </div>
+        <div class="changelog-entry">
+          <span class="changelog-date">2026-08-04</span>
+          <span class="changelog-ver">v0.2</span>
+          <div class="changelog-body">
+            <strong>Costing Method Refactor</strong>
+            <ul>
+              <li>Removed flawed Weighted Average (Periodic)</li>
+              <li>Added Average (Weekly / Monthly / Yearly) with proper date-based period grouping</li>
+              <li>ISO week calculation uses local date (所见即所得), no timezone shift</li>
+              <li>FIFO / LIFO / Average (Perpetual) — unchanged</li>
+            </ul>
+          </div>
+        </div>
+        <div class="changelog-entry">
+          <span class="changelog-date">2026-08-04</span>
+          <span class="changelog-ver">v0.1</span>
+          <div class="changelog-body">
+            <strong>Initial Release</strong>
+            <ul>
+              <li>IAS 2 Inventory Workbench — editable spreadsheet-style table</li>
+              <li>FIFO, LIFO, Weighted Average (Periodic &amp; Perpetual) costing</li>
+              <li>5 transaction types: OPEN, PURCHASE, SALE, DAMAGE, WRITE-DOWN</li>
+              <li>Real-time calculation, Inventory Layers, Summary section</li>
+              <li>Sidebar navigation with collapsible IAS/IFRS chapter list</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- IAS 2: Inventory Workbench -->
-    <section class="chapter-panel active" id="chapter-ias2">
+    <section class="chapter-panel" id="chapter-ias2">
       <div class="wb-header">
         <div>
           <h1>Inventory Management</h1>
