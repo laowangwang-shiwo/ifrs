@@ -28,11 +28,8 @@
     // Guard: only run when IAS 1 panel elements exist
     if (!cfBody) return;
 
-    // Default cash flows
-    addCF(0, -100000);
-    addCF(1, 30000);
-    addCF(2, 40000);
-    addCF(3, 50000);
+    // Default: Year 0 only
+    addCF(0, 0);
 
     addCfBtn.addEventListener('click', onAddCF);
     rateInput.addEventListener('input', function () {
