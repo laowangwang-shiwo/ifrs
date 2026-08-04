@@ -38,7 +38,12 @@
   function onMethodChange() {
     currentMethod = methodSelect.value;
     var isLayered = currentMethod === 'fifo' || currentMethod === 'lifo';
+    var isPeriodicWA = currentMethod === 'wa-weekly' || currentMethod === 'wa-monthly' || currentMethod === 'wa-yearly';
+
     layersSection.style.display = isLayered ? '' : 'none';
+    var psSection = document.getElementById('periodSummarySection');
+    if (psSection) psSection.style.display = isPeriodicWA ? '' : 'none';
+
     recalcAndUpdate();
   }
 
@@ -261,6 +266,7 @@
     var resultMap = {};
     var runningQty = 0, runningVal = 0;
     var totalRevenue = 0, totalCOGS = 0;
+    var periodSummaries = [];
 
     groups.forEach(function (group) {
       // Beginning inventory for this period = carry-over from previous period
@@ -283,6 +289,9 @@
       var availableVal = begVal + periodPurchVal;
       var avgCost = availableQty > 0 ? availableVal / availableQty : 0;
 
+      // Period-level aggregates
+      var periodRevenue = 0, periodCOGS = 0;
+
       // Process each transaction in this period
       group.entries.forEach(function (e) {
         var tx = e.tx;
@@ -302,11 +311,14 @@
           revenue = txVal;
           totalRevenue += revenue;
           totalCOGS += cogs;
+          periodRevenue += revenue;
+          periodCOGS += cogs;
         } else if (tx.type === 'DAMAGE') {
           cogs = qty * avgCost;
           runningQty -= qty;
           runningVal -= cogs;
           txVal = cogs;
+          periodCOGS += cogs;
         } else if (tx.type === 'WRITE_DOWN') {
           runningVal -= price;
           txVal = price;
@@ -322,6 +334,17 @@
           layers: []
         };
       });
+
+      // Save period summary
+      periodSummaries.push({
+        periodKey: group.key,
+        avgCost: avgCost,
+        revenue: periodRevenue,
+        cogs: periodCOGS,
+        grossProfit: periodRevenue - periodCOGS,
+        endQty: runningQty,
+        endVal: runningVal
+      });
     });
 
     // 4. Build results in original transaction order
@@ -333,7 +356,8 @@
       totalRevenue: totalRevenue,
       totalCOGS: totalCOGS,
       endQty: runningQty,   // final state after all periods processed
-      endVal: runningVal
+      endVal: runningVal,
+      periodSummaries: periodSummaries
     };
   }
 
@@ -764,12 +788,71 @@
     return td;
   }
 
+  // ── Period Summary Rendering ────────────────
+
+  function formatPeriodLabel(key, method) {
+    if (method === 'wa-weekly') {
+      var parts = key.split('-W');
+      return 'Week ' + parts[1] + ' ' + parts[0];
+    }
+    if (method === 'wa-monthly') {
+      var months = ['January','February','March','April','May','June',
+                    'July','August','September','October','November','December'];
+      var p = key.split('-');
+      return months[parseInt(p[1], 10) - 1] + ' ' + p[0];
+    }
+    // yearly or fallback
+    return key;
+  }
+
+  function renderPeriodSummary(calcResult) {
+    var isPeriodicWA = currentMethod === 'wa-weekly' || currentMethod === 'wa-monthly' || currentMethod === 'wa-yearly';
+    var container = document.getElementById('periodSummarySection');
+    var content  = document.getElementById('periodSummaryContent');
+    if (!container || !content) return;
+
+    if (!isPeriodicWA) {
+      container.style.display = 'none';
+      return;
+    }
+
+    var summaries = calcResult.periodSummaries;
+    if (!summaries || summaries.length === 0) {
+      container.style.display = 'none';
+      return;
+    }
+
+    var html = '';
+    summaries.forEach(function (p) {
+      var label = formatPeriodLabel(p.periodKey, currentMethod);
+      html += '<div class="wb-period-card">';
+      html += '<div class="wb-period-card-title">' + label + '</div>';
+      html += '<div class="wb-period-metrics">';
+      html += buildMetric('Average Cost',       fmt(p.avgCost));
+      html += buildMetric('Revenue',            fmt(p.revenue));
+      html += buildMetric('COGS',               fmt(p.cogs));
+      html += buildMetric('Gross Profit',       fmt(p.grossProfit));
+      html += buildMetric('Ending Inventory',   fmtInt(p.endQty) + ' units<br><span class="wb-period-sub">' + fmt(p.endVal) + '</span>');
+      html += '</div></div>';
+    });
+
+    content.innerHTML = html;
+    container.style.display = '';
+  }
+
+  function buildMetric(label, value) {
+    return '<div class="wb-period-metric">' +
+           '<span class="wb-period-metric-label">' + label + '</span>' +
+           '<span class="wb-period-metric-value">' + value + '</span></div>';
+  }
+
   // ── Orchestration ────────────────────────────
   function recalcAndUpdate() {
     var result = runCalc();
     updateComputed(result);
     updateSummary(result);
     updateLayers(result);
+    renderPeriodSummary(result);
 
     // Validation (non-blocking — errors are visual only)
     validateAllDates();

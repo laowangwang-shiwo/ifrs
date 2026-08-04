@@ -571,6 +571,74 @@ td[data-field="invVal"] {
   color: #0f172a;
 }
 
+/* ── Period Summary ────────────────────────── */
+.wb-period-summary {
+  margin-top: 24px;
+}
+
+.wb-period-summary .wb-card-title {
+  font-size: .9rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 14px;
+}
+
+#periodSummaryContent {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.wb-period-card {
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+  padding: 18px 22px;
+  box-shadow: 0 1px 3px rgba(0,0,0,.04);
+}
+
+.wb-period-card-title {
+  font-size: .9rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.wb-period-metrics {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 24px;
+}
+
+.wb-period-metric {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+}
+
+.wb-period-metric-label {
+  font-size: .8rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.wb-period-metric-value {
+  font-size: .875rem;
+  font-weight: 600;
+  color: #0f172a;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.wb-period-sub {
+  font-size: .8rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
 /* ── Validation Errors ──────────────────────── */
 
 /* Date input error */
