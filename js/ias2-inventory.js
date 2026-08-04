@@ -482,6 +482,43 @@
     return td;
   }
 
+  /**
+   * Enforce date-chain rule: each row's date must be >= previous row's date.
+   * If a row's date is earlier, clamp it to the previous row's date.
+   * Then cascade forward: push downstream rows' dates up if they now violate.
+   */
+  function enforceDateChain(changedIdx) {
+    // Backward check: clamp to previous row
+    if (changedIdx > 0) {
+      var prevDate = transactions[changedIdx - 1].date;
+      if (transactions[changedIdx].date < prevDate) {
+        transactions[changedIdx].date = prevDate;
+      }
+    }
+
+    // Forward cascade: ensure each row >= its predecessor
+    for (var i = changedIdx + 1; i < transactions.length; i++) {
+      var prev = transactions[i - 1].date;
+      if (transactions[i].date < prev) {
+        transactions[i].date = prev;
+      }
+    }
+
+    // Refresh all date inputs to reflect adjusted values
+    var rows = tableBody.querySelectorAll('tr');
+    rows.forEach(function (row) {
+      var id = parseInt(row.getAttribute('data-id'));
+      var tx = null;
+      for (var j = 0; j < transactions.length; j++) {
+        if (transactions[j].id === id) { tx = transactions[j]; break; }
+      }
+      if (tx) {
+        var dateInput = row.querySelector('td.col-date input');
+        if (dateInput) dateInput.value = tx.date;
+      }
+    });
+  }
+
   function buildDateCell(tx) {
     var td = ce('td', 'col-date');
     var inp = ce('input');
@@ -489,6 +526,11 @@
     inp.value = tx.date;
     inp.addEventListener('change', function () {
       tx.date = inp.value;
+      var idx = -1;
+      for (var i = 0; i < transactions.length; i++) {
+        if (transactions[i].id === tx.id) { idx = i; break; }
+      }
+      enforceDateChain(idx);
       recalcAndUpdate();
     });
     td.appendChild(inp);
