@@ -94,18 +94,28 @@
 
   // ── Period key functions ────────────────────
 
-  /** ISO Week: "2025-W01", "2026-W52" etc. */
+  /**
+   * ISO Week: "2025-W01", "2026-W52" etc.
+   * Uses Date.UTC so the date components are treated literally
+   * (local date = displayed date, no timezone shift).
+   */
   function getISOWeekKey(dateStr) {
     if (!dateStr) return '0000-W00';
-    var d = new Date(dateStr + 'T00:00:00');
-    if (isNaN(d.getTime())) return '0000-W00';
-    var day = d.getUTCDay() || 7;
+    var parts = dateStr.split('-');
+    var y = parseInt(parts[0], 10);
+    var m = parseInt(parts[1], 10) - 1;
+    var d = parseInt(parts[2], 10);
+    if (isNaN(y) || isNaN(m) || isNaN(d)) return '0000-W00';
+
+    // Construct as UTC so date components are exact — 所见即所得
+    var dt = new Date(Date.UTC(y, m, d));
+    var dayOfWeek = dt.getUTCDay() || 7; // Mon=1 … Sun=7
     // Move to Thursday of this week
-    d.setUTCDate(d.getUTCDate() + 4 - day);
-    var year = d.getUTCFullYear();
-    var jan1 = new Date(Date.UTC(year, 0, 1));
-    var weekNum = Math.ceil(((d - jan1) / 86400000 + 1) / 7);
-    return year + '-W' + String(weekNum).padStart(2, '0');
+    dt.setUTCDate(d + 4 - dayOfWeek);
+    var isoYear = dt.getUTCFullYear();
+    var jan1 = new Date(Date.UTC(isoYear, 0, 1));
+    var weekNum = Math.ceil(((dt - jan1) / 86400000 + 1) / 7);
+    return isoYear + '-W' + String(weekNum).padStart(2, '0');
   }
 
   function getMonthKey(dateStr) {
