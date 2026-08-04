@@ -736,6 +736,102 @@ td[data-field="invVal"] {
   margin-bottom: 3px;
 }
 
+/* ── Investment Analysis (IAS 1) ────────────── */
+
+.inv-assumption {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.inv-assumption label {
+  font-size: .875rem;
+  font-weight: 500;
+  color: #334155;
+}
+
+.inv-rate-input {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.inv-rate-input input {
+  width: 100px;
+  padding: 8px 12px;
+  font-size: .9rem;
+  font-family: inherit;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  text-align: right;
+  transition: border-color .15s, box-shadow .15s;
+}
+
+.inv-rate-input input:focus {
+  outline: none;
+  border-color: #2563EB;
+  box-shadow: 0 0 0 3px rgba(37,99,235,.12);
+}
+
+.inv-rate-input span {
+  font-size: .9rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+/* Timeline */
+.timeline-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.timeline-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.timeline-label {
+  width: 60px;
+  font-size: .8rem;
+  font-weight: 500;
+  color: #64748b;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.timeline-bar-track {
+  flex: 1;
+  height: 28px;
+  background: #f1f5f9;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.timeline-bar {
+  height: 100%;
+  border-radius: 6px;
+  min-width: 0;
+  transition: width .3s ease;
+}
+
+.timeline-bar-negative {
+  background: #ef4444;
+}
+
+.timeline-bar-positive {
+  background: #22c55e;
+}
+
+.timeline-amount {
+  width: 100px;
+  font-size: .85rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: #1e293b;
+}
+
 /* ── Validation Errors ──────────────────────── */
 
 /* Date input error */
