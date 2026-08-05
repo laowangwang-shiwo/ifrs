@@ -86,6 +86,22 @@
       <div class="wb-changelog">
         <div class="changelog-entry">
           <span class="changelog-date">2026-08-05</span>
+          <span class="changelog-ver">v0.6</span>
+          <div class="changelog-body">
+            <strong>IAS 7 — Cash Flow Statement Builder</strong>
+            <ul>
+              <li>Single unified report container — formal Statement of Cash Flows layout</li>
+              <li>Direct Method and Indirect Method side-by-side within Operating Activities</li>
+              <li>Auto reconciliation — ✅ Reconciled or ⚠ Difference Detected with exact variance</li>
+              <li>Investing Activities (PPE, Investments, Loans) — shared inputs</li>
+              <li>Financing Activities (Shares, Borrowings, Dividends, Buybacks) — shared inputs</li>
+              <li>Cash Flow Summary — Net Increase, Opening &amp; Closing Cash</li>
+              <li>Real-time computation — no Calculate button needed</li>
+            </ul>
+          </div>
+        </div>
+        <div class="changelog-entry">
+          <span class="changelog-date">2026-08-05</span>
           <span class="changelog-ver">v0.5</span>
           <div class="changelog-body">
             <strong>IAS 1 — Investment Analysis</strong>
@@ -305,7 +321,77 @@
         <div id="cfTimeline"></div>
       </div>
     </section>
-    <section class="chapter-panel" id="chapter-ias7"><h1>IAS 7 — Statement of Cash Flows</h1><div class="placeholder-card">💵 Coming soon</div></section>
+    <!-- IAS 7: Cash Flow Statement Builder -->
+    <section class="chapter-panel" id="chapter-ias7">
+      <h1>Cash Flow Statement Builder</h1>
+      <p class="chapter-intro">Build and reconcile cash flow statements using both direct and indirect methods.</p>
+
+      <div class="cf-report">
+
+        <!-- Operating Activities -->
+        <div class="cf-report-section">
+          <div class="cf-report-section-head">Operating Activities</div>
+
+          <div class="cf-dual">
+            <!-- Direct Method -->
+            <div class="cf-sub">
+              <div class="cf-sub-title">Direct Method</div>
+              <div id="cfDirectInputs"></div>
+              <div class="cf-sub-result">
+                <span>Net Cash from Operating Activities</span>
+                <span id="cfDirectOCF">—</span>
+              </div>
+            </div>
+            <!-- Indirect Method -->
+            <div class="cf-sub">
+              <div class="cf-sub-title">Indirect Method</div>
+              <div id="cfIndirectInputs"></div>
+              <div class="cf-sub-result">
+                <span>Net Cash from Operating Activities</span>
+                <span id="cfIndirectOCF">—</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Reconciliation inline -->
+          <div class="cf-reconcile" id="cfReconcile">
+            <span class="cf-reconcile-icon" id="cfReconcileIcon"></span>
+            <span id="cfReconcileText"></span>
+          </div>
+        </div>
+
+        <!-- Investing Activities -->
+        <div class="cf-report-section">
+          <div class="cf-report-section-head">Investing Activities</div>
+          <div class="cf-input-grid" id="cfInvestingInputs"></div>
+          <div class="cf-sub-result">
+            <span>Net Cash from Investing Activities</span>
+            <span id="cfInvestingCF">—</span>
+          </div>
+        </div>
+
+        <!-- Financing Activities -->
+        <div class="cf-report-section">
+          <div class="cf-report-section-head">Financing Activities</div>
+          <div class="cf-input-grid" id="cfFinancingInputs"></div>
+          <div class="cf-sub-result">
+            <span>Net Cash from Financing Activities</span>
+            <span id="cfFinancingCF">—</span>
+          </div>
+        </div>
+
+        <!-- Cash Flow Summary -->
+        <div class="cf-report-section">
+          <div class="cf-report-section-head">Cash Flow Summary</div>
+          <div class="cf-input-grid" id="cfCashInputs"></div>
+          <div class="cf-stmt-divider"></div>
+          <div class="cf-summary-row"><span>Net Increase / Decrease in Cash</span><span id="cfNetChange">—</span></div>
+          <div class="cf-stmt-divider"></div>
+          <div class="cf-summary-row cf-summary-total"><span>Closing Cash and Cash Equivalents</span><span id="cfClosingCash">—</span></div>
+        </div>
+
+      </div>
+    </section>
     <section class="chapter-panel" id="chapter-ias8"><h1>IAS 8 — Accounting Policies, Changes in Estimates & Errors</h1><div class="placeholder-card">📋 Coming soon</div></section>
     <section class="chapter-panel" id="chapter-ias10"><h1>IAS 10 — Events After the Reporting Period</h1><div class="placeholder-card">📅 Coming soon</div></section>
     <section class="chapter-panel" id="chapter-ias12"><h1>IAS 12 — Income Taxes</h1><div class="placeholder-card">💰 Coming soon</div></section>
@@ -334,5 +420,6 @@
   <script src="js/app.js"></script>
   <script src="js/ias2-inventory.js"></script>
   <script src="js/ias1-investment.js"></script>
+  <script src="js/ias7-cashflow.js"></script>
 </body>
 </html>
