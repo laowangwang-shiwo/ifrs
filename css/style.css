@@ -92,6 +92,27 @@ body {
   background: rgba(255,255,255,.08);
 }
 
+/* --- Language Toggle Button --- */
+.lang-toggle-btn {
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.15);
+  color: #94a3b8;
+  cursor: pointer;
+  font-size: .75rem;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: 4px;
+  line-height: 1.6;
+  transition: color .15s, background .15s, border-color .15s;
+  white-space: nowrap;
+}
+
+.lang-toggle-btn:hover {
+  color: #fff;
+  background: rgba(255,255,255,.15);
+  border-color: rgba(255,255,255,.25);
+}
+
 /* --- Sidebar Expand Button (floating, shown when collapsed) --- */
 .sidebar-expand-btn {
   display: none;

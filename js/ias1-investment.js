@@ -67,7 +67,7 @@
 
   function fmtYears(n) {
     if (n == null || isNaN(n) || !isFinite(n)) return '—';
-    return n.toFixed(1) + ' Years';
+    return n.toFixed(1) + (I18N.lang === 'zh' ? ' 年' : ' Years');
   }
 
   // ── Calculation ──────────────────────────────
@@ -163,10 +163,10 @@
     // Validation
     var warnings = [];
     if (irr == null) {
-      warnings.push('<strong>IRR cannot be determined</strong> for this cash flow pattern.');
+      warnings.push('<strong>' + I18N.t('IRR cannot be determined') + '</strong> ' + I18N.t('for this cash flow pattern.'));
     }
     if (payback == null && cashFlows.length > 1) {
-      warnings.push('<strong>Payback period not reached.</strong> Cumulative cash flow never turns positive.');
+      warnings.push('<strong>' + I18N.t('Payback period not reached.') + '</strong> ' + I18N.t('Cumulative cash flow never turns positive.'));
     }
 
     if (warnings.length > 0) {
@@ -195,7 +195,7 @@
       var pct = Math.abs(cf.amount) / maxAbs * 100;
       var cls = cf.amount >= 0 ? 'timeline-bar-positive' : 'timeline-bar-negative';
       html += '<div class="timeline-row">';
-      html += '<span class="timeline-label">Year ' + cf.year + '</span>';
+      html += '<span class="timeline-label">' + (I18N.lang === 'zh' ? '第' + cf.year + '年' : 'Year ' + cf.year) + '</span>';
       html += '<div class="timeline-bar-track">';
       html += '<div class="timeline-bar ' + cls + '" style="width:' + pct + '%"></div>';
       html += '</div>';
@@ -243,7 +243,7 @@
     var btn = document.createElement('button');
     btn.className = 'wb-row-del';
     btn.textContent = '×';
-    btn.title = cf.year === 0 ? 'Year 0 cannot be removed' : 'Remove';
+    btn.title = cf.year === 0 ? I18N.t('Year 0 cannot be removed') : I18N.t('Remove');
     if (cf.year === 0) {
       btn.style.opacity = '0.25';
       btn.style.cursor = 'not-allowed';
@@ -284,15 +284,21 @@
         if (i === 0) {
           delBtn.style.opacity = '0.25';
           delBtn.style.cursor = 'not-allowed';
-          delBtn.title = 'Year 0 cannot be removed';
+          delBtn.title = I18N.t('Year 0 cannot be removed');
         } else {
           delBtn.style.opacity = '';
           delBtn.style.cursor = '';
-          delBtn.title = 'Remove';
+          delBtn.title = I18N.t('Remove');
         }
       }
     });
   }
+
+  // ── Language change handler ─────────────────
+  I18N.onLangChange(function () {
+    renderAllRows();   // update tooltips
+    recalcAll();       // re-render timeline + warnings
+  });
 
   // ── Start ────────────────────────────────────
   init();

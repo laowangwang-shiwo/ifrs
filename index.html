@@ -10,71 +10,72 @@
   <!-- Sidebar -->
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-header">
-      <h2>IFRS Calculator</h2>
-      <button class="sidebar-collapse-btn" id="sidebarCollapseBtn" title="Collapse sidebar">◀</button>
+      <h2 data-i18n>IFRS Calculator</h2>
+      <button class="lang-toggle-btn" id="langToggle" title="Switch language" onclick="I18N.toggle()">中文</button>
+      <button class="sidebar-collapse-btn" id="sidebarCollapseBtn" data-i18n-title="Collapse sidebar" title="Collapse sidebar">◀</button>
     </div>
 
     <nav class="chapter-nav">
       <!-- Home -->
-      <a href="#" class="chapter-link active" data-chapter="intro">🏠 Home</a>
+      <a href="#" class="chapter-link active" data-chapter="intro" data-i18n>🏠 Home</a>
 
       <!-- IAS Section -->
       <div class="nav-section">
         <button class="nav-section-title" onclick="this.classList.toggle('collapsed')">
-          <span class="section-arrow">▾</span> IAS Standards
+          <span class="section-arrow">▾</span> <span data-i18n>IAS Standards</span>
         </button>
         <div class="nav-section-items">
-          <a href="#" class="chapter-link" data-chapter="ias1">IAS 1 — Presentation of Financial Statements</a>
-          <a href="#" class="chapter-link" data-chapter="ias2">IAS 2 — Inventories</a>
-          <a href="#" class="chapter-link" data-chapter="ias7">IAS 7 — Statement of Cash Flows</a>
-          <a href="#" class="chapter-link" data-chapter="ias8">IAS 8 — Accounting Policies & Estimates</a>
-          <a href="#" class="chapter-link" data-chapter="ias10">IAS 10 — Events After Reporting Period</a>
-          <a href="#" class="chapter-link" data-chapter="ias12">IAS 12 — Income Taxes</a>
-          <a href="#" class="chapter-link" data-chapter="ias16">IAS 16 — Property, Plant & Equipment</a>
-          <a href="#" class="chapter-link" data-chapter="ias19">IAS 19 — Employee Benefits</a>
-          <a href="#" class="chapter-link" data-chapter="ias21">IAS 21 — Foreign Exchange Rates</a>
-          <a href="#" class="chapter-link" data-chapter="ias23">IAS 23 — Borrowing Costs</a>
-          <a href="#" class="chapter-link" data-chapter="ias33">IAS 33 — Earnings Per Share</a>
-          <a href="#" class="chapter-link" data-chapter="ias36">IAS 36 — Impairment of Assets</a>
-          <a href="#" class="chapter-link" data-chapter="ias37">IAS 37 — Provisions & Contingencies</a>
-          <a href="#" class="chapter-link" data-chapter="ias38">IAS 38 — Intangible Assets</a>
-          <a href="#" class="chapter-link" data-chapter="ias40">IAS 40 — Investment Property</a>
-          <a href="#" class="chapter-link" data-chapter="ias41">IAS 41 — Agriculture</a>
+          <a href="#" class="chapter-link" data-chapter="ias1" data-i18n>IAS 1 — Presentation of Financial Statements</a>
+          <a href="#" class="chapter-link" data-chapter="ias2" data-i18n>IAS 2 — Inventories</a>
+          <a href="#" class="chapter-link" data-chapter="ias7" data-i18n>IAS 7 — Statement of Cash Flows</a>
+          <a href="#" class="chapter-link" data-chapter="ias8" data-i18n>IAS 8 — Accounting Policies & Estimates</a>
+          <a href="#" class="chapter-link" data-chapter="ias10" data-i18n>IAS 10 — Events After Reporting Period</a>
+          <a href="#" class="chapter-link" data-chapter="ias12" data-i18n>IAS 12 — Income Taxes</a>
+          <a href="#" class="chapter-link" data-chapter="ias16" data-i18n>IAS 16 — Property, Plant & Equipment</a>
+          <a href="#" class="chapter-link" data-chapter="ias19" data-i18n>IAS 19 — Employee Benefits</a>
+          <a href="#" class="chapter-link" data-chapter="ias21" data-i18n>IAS 21 — Foreign Exchange Rates</a>
+          <a href="#" class="chapter-link" data-chapter="ias23" data-i18n>IAS 23 — Borrowing Costs</a>
+          <a href="#" class="chapter-link" data-chapter="ias33" data-i18n>IAS 33 — Earnings Per Share</a>
+          <a href="#" class="chapter-link" data-chapter="ias36" data-i18n>IAS 36 — Impairment of Assets</a>
+          <a href="#" class="chapter-link" data-chapter="ias37" data-i18n>IAS 37 — Provisions & Contingencies</a>
+          <a href="#" class="chapter-link" data-chapter="ias38" data-i18n>IAS 38 — Intangible Assets</a>
+          <a href="#" class="chapter-link" data-chapter="ias40" data-i18n>IAS 40 — Investment Property</a>
+          <a href="#" class="chapter-link" data-chapter="ias41" data-i18n>IAS 41 — Agriculture</a>
         </div>
       </div>
 
       <!-- IFRS Section -->
       <div class="nav-section">
         <button class="nav-section-title" onclick="this.classList.toggle('collapsed')">
-          <span class="section-arrow">▾</span> IFRS Standards
+          <span class="section-arrow">▾</span> <span data-i18n>IFRS Standards</span>
         </button>
         <div class="nav-section-items">
-          <a href="#" class="chapter-link" data-chapter="ifrs2">IFRS 2 — Share-based Payment</a>
-          <a href="#" class="chapter-link" data-chapter="ifrs3">IFRS 3 — Business Combinations</a>
-          <a href="#" class="chapter-link" data-chapter="ifrs5">IFRS 5 — Non-current Assets Held for Sale</a>
-          <a href="#" class="chapter-link" data-chapter="ifrs6">IFRS 6 — Mineral Resources</a>
-          <a href="#" class="chapter-link" data-chapter="ifrs9">IFRS 9 — Financial Instruments</a>
-          <a href="#" class="chapter-link" data-chapter="ifrs10">IFRS 10 — Consolidated Financial Statements</a>
-          <a href="#" class="chapter-link" data-chapter="ifrs13">IFRS 13 — Fair Value Measurement</a>
-          <a href="#" class="chapter-link" data-chapter="ifrs15">IFRS 15 — Revenue from Contracts</a>
-          <a href="#" class="chapter-link" data-chapter="ifrs16">IFRS 16 — Leases</a>
+          <a href="#" class="chapter-link" data-chapter="ifrs2" data-i18n>IFRS 2 — Share-based Payment</a>
+          <a href="#" class="chapter-link" data-chapter="ifrs3" data-i18n>IFRS 3 — Business Combinations</a>
+          <a href="#" class="chapter-link" data-chapter="ifrs5" data-i18n>IFRS 5 — Non-current Assets Held for Sale</a>
+          <a href="#" class="chapter-link" data-chapter="ifrs6" data-i18n>IFRS 6 — Mineral Resources</a>
+          <a href="#" class="chapter-link" data-chapter="ifrs9" data-i18n>IFRS 9 — Financial Instruments</a>
+          <a href="#" class="chapter-link" data-chapter="ifrs10" data-i18n>IFRS 10 — Consolidated Financial Statements</a>
+          <a href="#" class="chapter-link" data-chapter="ifrs13" data-i18n>IFRS 13 — Fair Value Measurement</a>
+          <a href="#" class="chapter-link" data-chapter="ifrs15" data-i18n>IFRS 15 — Revenue from Contracts</a>
+          <a href="#" class="chapter-link" data-chapter="ifrs16" data-i18n>IFRS 16 — Leases</a>
         </div>
       </div>
     </nav>
   </aside>
 
   <!-- Floating button when sidebar collapsed (desktop) -->
-  <button class="sidebar-expand-btn" id="sidebarExpandBtn" title="Expand sidebar" aria-label="Expand sidebar">▶</button>
+  <button class="sidebar-expand-btn" id="sidebarExpandBtn" data-i18n-title="Expand sidebar" title="Expand sidebar" data-i18n-aria="Expand sidebar" aria-label="Expand sidebar">▶</button>
 
   <!-- Mobile menu toggle -->
-  <button class="menu-toggle" id="menuToggle" aria-label="Toggle sidebar">☰</button>
+  <button class="menu-toggle" id="menuToggle" data-i18n-aria="Toggle sidebar" aria-label="Toggle sidebar">☰</button>
 
   <!-- Main content -->
   <main class="main-content" id="mainContent">
 
     <!-- Intro -->
     <section class="chapter-panel active" id="chapter-intro">
-      <h1>IFRS Calculator</h1>
+      <h1 data-i18n>IFRS Calculator</h1>
       <p class="chapter-intro">
         HELLO，如果你不知为何误入这个网页，恭喜你什么都没有得到，这里是一个简单的会计计算器，用于练习国际准则和USGAAP准则下的会计计算，希望你能喜欢!!!
       </p>
@@ -84,6 +85,18 @@
 
       <h2>更新日志</h2>
       <div class="wb-changelog">
+        <div class="changelog-entry">
+          <span class="changelog-date">2026-08-08</span>
+          <span class="changelog-ver">v0.7</span>
+          <div class="changelog-body">
+            <strong>🌐 中英文切换</strong>
+            <ul>
+              <li>侧栏头部语言切换按钮，偏好保存至 localStorage</li>
+              <li>全部 UI 标签、章节名、表头、校验警告、对账消息支持中英文</li>
+              <li>表格内容、数字、方法名保持英文</li>
+            </ul>
+          </div>
+        </div>
         <div class="changelog-entry">
           <span class="changelog-date">2026-08-05</span>
           <span class="changelog-ver">v0.6</span>
@@ -175,11 +188,11 @@
     <section class="chapter-panel" id="chapter-ias2">
       <div class="wb-header">
         <div>
-          <h1>Inventory Management</h1>
-          <p class="chapter-intro">Track inventory transactions and automatically calculate inventory value, COGS, revenue and profit based on IAS 2 inventory costing methods.</p>
+          <h1 data-i18n>Inventory Management</h1>
+          <p class="chapter-intro" data-i18n>Track inventory transactions and automatically calculate inventory value, COGS, revenue and profit based on IAS 2 inventory costing methods.</p>
         </div>
         <div class="wb-method-selector">
-          <label for="costingMethod">Costing Method</label>
+          <label for="costingMethod" data-i18n>Costing Method</label>
           <div class="wb-select-wrapper">
             <select id="costingMethod">
               <option value="fifo">FIFO</option>
@@ -198,14 +211,14 @@
         <table class="wb-table" id="inventoryTable">
           <thead>
             <tr>
-              <th class="col-num">#</th>
-              <th class="col-type">Type</th>
-              <th class="col-date">Date</th>
-              <th class="col-price">Unit Price</th>
-              <th class="col-qty">Quantity</th>
-              <th class="col-txval">Transaction Value</th>
-              <th class="col-invqty">Inventory Quantity</th>
-              <th class="col-invval">Inventory Value</th>
+              <th class="col-num" data-i18n>#</th>
+              <th class="col-type" data-i18n>Type</th>
+              <th class="col-date" data-i18n>Date</th>
+              <th class="col-price" data-i18n>Unit Price</th>
+              <th class="col-qty" data-i18n>Quantity</th>
+              <th class="col-txval" data-i18n>Transaction Value</th>
+              <th class="col-invqty" data-i18n>Inventory Quantity</th>
+              <th class="col-invval" data-i18n>Inventory Value</th>
               <th class="col-del"></th>
             </tr>
           </thead>
@@ -213,20 +226,20 @@
         </table>
       </div>
 
-      <button class="wb-add-btn" id="addTransactionBtn">+ Add Transaction</button>
+      <button class="wb-add-btn" id="addTransactionBtn" data-i18n>+ Add Transaction</button>
 
       <!-- Inventory Layers (FIFO / LIFO) -->
       <div class="wb-card wb-layers" id="layersSection" style="display:none">
-        <h3 class="wb-card-title">Remaining Inventory Layers</h3>
+        <h3 class="wb-card-title" data-i18n>Remaining Inventory Layers</h3>
         <table class="wb-layers-table" id="layersTable">
-          <thead><tr><th>Layer</th><th>Quantity</th><th>Unit Cost</th><th>Total Cost</th></tr></thead>
+          <thead><tr><th data-i18n>Layer</th><th data-i18n>Quantity</th><th data-i18n>Unit Cost</th><th data-i18n>Total Cost</th></tr></thead>
           <tbody id="layersTableBody"></tbody>
         </table>
       </div>
 
       <!-- Period Summary (WA Weekly / Monthly / Yearly) -->
       <div class="wb-period-summary" id="periodSummarySection" style="display:none">
-        <h3 class="wb-card-title">Period Summary</h3>
+        <h3 class="wb-card-title" data-i18n>Period Summary</h3>
         <div id="periodSummaryContent"></div>
       </div>
 
@@ -239,27 +252,27 @@
       <!-- Summary -->
       <div class="wb-summary" id="summarySection">
         <div class="wb-summary-item">
-          <span class="wb-summary-label">Ending Inventory Quantity</span>
+          <span class="wb-summary-label" data-i18n>Ending Inventory Quantity</span>
           <span class="wb-summary-value" id="sumEndQty">—</span>
         </div>
         <div class="wb-summary-item">
-          <span class="wb-summary-label">Ending Inventory Value</span>
+          <span class="wb-summary-label" data-i18n>Ending Inventory Value</span>
           <span class="wb-summary-value" id="sumEndVal">—</span>
         </div>
         <div class="wb-summary-item">
-          <span class="wb-summary-label">Revenue</span>
+          <span class="wb-summary-label" data-i18n>Revenue</span>
           <span class="wb-summary-value" id="sumRevenue">—</span>
         </div>
         <div class="wb-summary-item">
-          <span class="wb-summary-label">COGS</span>
+          <span class="wb-summary-label" data-i18n>COGS</span>
           <span class="wb-summary-value" id="sumCOGS">—</span>
         </div>
         <div class="wb-summary-item">
-          <span class="wb-summary-label">Gross Profit</span>
+          <span class="wb-summary-label" data-i18n>Gross Profit</span>
           <span class="wb-summary-value" id="sumGP">—</span>
         </div>
         <div class="wb-summary-item wb-summary-highlight">
-          <span class="wb-summary-label">Gross Margin %</span>
+          <span class="wb-summary-label" data-i18n>Gross Margin %</span>
           <span class="wb-summary-value" id="sumGM">—</span>
         </div>
       </div>
@@ -270,30 +283,30 @@
     <section class="chapter-panel" id="chapter-ias1">
       <div class="wb-header">
         <div>
-          <h1>Investment Analysis</h1>
-          <p class="chapter-intro">Evaluate investment projects using discounted cash flow techniques.</p>
+          <h1 data-i18n>Investment Analysis</h1>
+          <p class="chapter-intro" data-i18n>Evaluate investment projects using discounted cash flow techniques.</p>
         </div>
       </div>
 
       <!-- Cash Flow Schedule -->
       <div class="wb-card" style="margin-bottom:18px">
-        <h3 class="wb-card-title">Cash Flow Schedule</h3>
+        <h3 class="wb-card-title" data-i18n>Cash Flow Schedule</h3>
         <div class="wb-table-wrapper">
           <table class="wb-table" id="cfTable">
             <thead>
-              <tr><th class="col-num">Year</th><th class="col-qty">Cash Flow</th><th class="col-del"></th></tr>
+              <tr><th class="col-num" data-i18n>Year</th><th class="col-qty" data-i18n>Cash Flow</th><th class="col-del"></th></tr>
             </thead>
             <tbody id="cfTableBody"></tbody>
           </table>
         </div>
-        <button class="wb-add-btn" id="addCfBtn" style="margin-top:12px">+ Add Cash Flow</button>
+        <button class="wb-add-btn" id="addCfBtn" style="margin-top:12px" data-i18n>+ Add Cash Flow</button>
       </div>
 
       <!-- Assumptions -->
       <div class="wb-card" style="margin-bottom:18px">
-        <h3 class="wb-card-title">Assumptions</h3>
+        <h3 class="wb-card-title" data-i18n>Assumptions</h3>
         <div class="inv-assumption">
-          <label for="discountRate">Discount Rate (%)</label>
+          <label for="discountRate" data-i18n>Discount Rate (%)</label>
           <div class="inv-rate-input">
             <input type="number" id="discountRate" value="10" step="0.1" min="0" max="100">
             <span>%</span>
@@ -305,8 +318,8 @@
       <div class="wb-summary" id="invSummary">
         <div class="wb-summary-item"><span class="wb-summary-label">NPV</span><span class="wb-summary-value" id="sumNPV">—</span></div>
         <div class="wb-summary-item"><span class="wb-summary-label">IRR</span><span class="wb-summary-value" id="sumIRR">—</span></div>
-        <div class="wb-summary-item"><span class="wb-summary-label">Payback Period</span><span class="wb-summary-value" id="sumPayback">—</span></div>
-        <div class="wb-summary-item wb-summary-highlight"><span class="wb-summary-label">DCF Value</span><span class="wb-summary-value" id="sumDCF">—</span></div>
+        <div class="wb-summary-item"><span class="wb-summary-label" data-i18n>Payback Period</span><span class="wb-summary-value" id="sumPayback">—</span></div>
+        <div class="wb-summary-item wb-summary-highlight"><span class="wb-summary-label" data-i18n>DCF Value</span><span class="wb-summary-value" id="sumDCF">—</span></div>
       </div>
 
       <!-- Validation Warning -->
@@ -317,37 +330,37 @@
 
       <!-- Cash Flow Timeline -->
       <div class="wb-card" style="margin-top:24px">
-        <h3 class="wb-card-title">Cash Flow Timeline</h3>
+        <h3 class="wb-card-title" data-i18n>Cash Flow Timeline</h3>
         <div id="cfTimeline"></div>
       </div>
     </section>
     <!-- IAS 7: Cash Flow Statement Builder -->
     <section class="chapter-panel" id="chapter-ias7">
-      <h1>Cash Flow Statement Builder</h1>
-      <p class="chapter-intro">Build and reconcile cash flow statements using both direct and indirect methods.</p>
+      <h1 data-i18n>Cash Flow Statement Builder</h1>
+      <p class="chapter-intro" data-i18n>Build and reconcile cash flow statements using both direct and indirect methods.</p>
 
       <div class="cf-report">
 
         <!-- Operating Activities -->
         <div class="cf-report-section">
-          <div class="cf-report-section-head">Operating Activities</div>
+          <div class="cf-report-section-head" data-i18n>Operating Activities</div>
 
           <div class="cf-dual">
             <!-- Direct Method -->
             <div class="cf-sub">
-              <div class="cf-sub-title">Direct Method</div>
+              <div class="cf-sub-title" data-i18n>Direct Method</div>
               <div id="cfDirectInputs"></div>
               <div class="cf-sub-result">
-                <span>Net Cash from Operating Activities</span>
+                <span data-i18n>Net Cash from Operating Activities</span>
                 <span id="cfDirectOCF">—</span>
               </div>
             </div>
             <!-- Indirect Method -->
             <div class="cf-sub">
-              <div class="cf-sub-title">Indirect Method</div>
+              <div class="cf-sub-title" data-i18n>Indirect Method</div>
               <div id="cfIndirectInputs"></div>
               <div class="cf-sub-result">
-                <span>Net Cash from Operating Activities</span>
+                <span data-i18n>Net Cash from Operating Activities</span>
                 <span id="cfIndirectOCF">—</span>
               </div>
             </div>
@@ -362,61 +375,62 @@
 
         <!-- Investing Activities -->
         <div class="cf-report-section">
-          <div class="cf-report-section-head">Investing Activities</div>
+          <div class="cf-report-section-head" data-i18n>Investing Activities</div>
           <div class="cf-input-grid" id="cfInvestingInputs"></div>
           <div class="cf-sub-result">
-            <span>Net Cash from Investing Activities</span>
+            <span data-i18n>Net Cash from Investing Activities</span>
             <span id="cfInvestingCF">—</span>
           </div>
         </div>
 
         <!-- Financing Activities -->
         <div class="cf-report-section">
-          <div class="cf-report-section-head">Financing Activities</div>
+          <div class="cf-report-section-head" data-i18n>Financing Activities</div>
           <div class="cf-input-grid" id="cfFinancingInputs"></div>
           <div class="cf-sub-result">
-            <span>Net Cash from Financing Activities</span>
+            <span data-i18n>Net Cash from Financing Activities</span>
             <span id="cfFinancingCF">—</span>
           </div>
         </div>
 
         <!-- Cash Flow Summary -->
         <div class="cf-report-section">
-          <div class="cf-report-section-head">Cash Flow Summary</div>
+          <div class="cf-report-section-head" data-i18n>Cash Flow Summary</div>
           <div class="cf-input-grid" id="cfCashInputs"></div>
           <div class="cf-stmt-divider"></div>
-          <div class="cf-summary-row"><span>Net Increase / Decrease in Cash</span><span id="cfNetChange">—</span></div>
+          <div class="cf-summary-row"><span data-i18n>Net Increase / Decrease in Cash</span><span id="cfNetChange">—</span></div>
           <div class="cf-stmt-divider"></div>
-          <div class="cf-summary-row cf-summary-total"><span>Closing Cash and Cash Equivalents</span><span id="cfClosingCash">—</span></div>
+          <div class="cf-summary-row cf-summary-total"><span data-i18n>Closing Cash and Cash Equivalents</span><span id="cfClosingCash">—</span></div>
         </div>
 
       </div>
     </section>
-    <section class="chapter-panel" id="chapter-ias8"><h1>IAS 8 — Accounting Policies, Changes in Estimates & Errors</h1><div class="placeholder-card">📋 Coming soon</div></section>
-    <section class="chapter-panel" id="chapter-ias10"><h1>IAS 10 — Events After the Reporting Period</h1><div class="placeholder-card">📅 Coming soon</div></section>
-    <section class="chapter-panel" id="chapter-ias12"><h1>IAS 12 — Income Taxes</h1><div class="placeholder-card">💰 Coming soon</div></section>
-    <section class="chapter-panel" id="chapter-ias16"><h1>IAS 16 — Property, Plant & Equipment</h1><div class="placeholder-card">🏭 Coming soon</div></section>
-    <section class="chapter-panel" id="chapter-ias19"><h1>IAS 19 — Employee Benefits</h1><div class="placeholder-card">👥 Coming soon</div></section>
-    <section class="chapter-panel" id="chapter-ias21"><h1>IAS 21 — The Effects of Changes in Foreign Exchange Rates</h1><div class="placeholder-card">💱 Coming soon</div></section>
-    <section class="chapter-panel" id="chapter-ias23"><h1>IAS 23 — Borrowing Costs</h1><div class="placeholder-card">🏦 Coming soon</div></section>
-    <section class="chapter-panel" id="chapter-ias33"><h1>IAS 33 — Earnings Per Share</h1><div class="placeholder-card">📊 Coming soon</div></section>
-    <section class="chapter-panel" id="chapter-ias36"><h1>IAS 36 — Impairment of Assets</h1><div class="placeholder-card">⚠️ Coming soon</div></section>
-    <section class="chapter-panel" id="chapter-ias37"><h1>IAS 37 — Provisions, Contingent Liabilities & Assets</h1><div class="placeholder-card">🔮 Coming soon</div></section>
-    <section class="chapter-panel" id="chapter-ias38"><h1>IAS 38 — Intangible Assets</h1><div class="placeholder-card">💡 Coming soon</div></section>
-    <section class="chapter-panel" id="chapter-ias40"><h1>IAS 40 — Investment Property</h1><div class="placeholder-card">🏢 Coming soon</div></section>
-    <section class="chapter-panel" id="chapter-ias41"><h1>IAS 41 — Agriculture</h1><div class="placeholder-card">🌾 Coming soon</div></section>
-    <section class="chapter-panel" id="chapter-ifrs2"><h1>IFRS 2 — Share-based Payment</h1><div class="placeholder-card">📝 Coming soon</div></section>
-    <section class="chapter-panel" id="chapter-ifrs3"><h1>IFRS 3 — Business Combinations</h1><div class="placeholder-card">🤝 Coming soon</div></section>
-    <section class="chapter-panel" id="chapter-ifrs5"><h1>IFRS 5 — Non-current Assets Held for Sale</h1><div class="placeholder-card">🏷️ Coming soon</div></section>
-    <section class="chapter-panel" id="chapter-ifrs6"><h1>IFRS 6 — Exploration for Mineral Resources</h1><div class="placeholder-card">⛏️ Coming soon</div></section>
-    <section class="chapter-panel" id="chapter-ifrs9"><h1>IFRS 9 — Financial Instruments</h1><div class="placeholder-card">💹 Coming soon</div></section>
-    <section class="chapter-panel" id="chapter-ifrs10"><h1>IFRS 10 — Consolidated Financial Statements</h1><div class="placeholder-card">🏛️ Coming soon</div></section>
-    <section class="chapter-panel" id="chapter-ifrs13"><h1>IFRS 13 — Fair Value Measurement</h1><div class="placeholder-card">⚖️ Coming soon</div></section>
-    <section class="chapter-panel" id="chapter-ifrs15"><h1>IFRS 15 — Revenue from Contracts with Customers</h1><div class="placeholder-card">📑 Coming soon</div></section>
-    <section class="chapter-panel" id="chapter-ifrs16"><h1>IFRS 16 — Leases</h1><div class="placeholder-card">🔑 Coming soon</div></section>
+    <section class="chapter-panel" id="chapter-ias8"><h1 data-i18n>IAS 8 — Accounting Policies, Changes in Estimates & Errors</h1><div class="placeholder-card" data-i18n>📋 Coming soon</div></section>
+    <section class="chapter-panel" id="chapter-ias10"><h1 data-i18n>IAS 10 — Events After the Reporting Period</h1><div class="placeholder-card" data-i18n>📅 Coming soon</div></section>
+    <section class="chapter-panel" id="chapter-ias12"><h1 data-i18n>IAS 12 — Income Taxes</h1><div class="placeholder-card" data-i18n>💰 Coming soon</div></section>
+    <section class="chapter-panel" id="chapter-ias16"><h1 data-i18n>IAS 16 — Property, Plant & Equipment</h1><div class="placeholder-card" data-i18n>🏭 Coming soon</div></section>
+    <section class="chapter-panel" id="chapter-ias19"><h1 data-i18n>IAS 19 — Employee Benefits</h1><div class="placeholder-card" data-i18n>👥 Coming soon</div></section>
+    <section class="chapter-panel" id="chapter-ias21"><h1 data-i18n>IAS 21 — The Effects of Changes in Foreign Exchange Rates</h1><div class="placeholder-card" data-i18n>💱 Coming soon</div></section>
+    <section class="chapter-panel" id="chapter-ias23"><h1 data-i18n>IAS 23 — Borrowing Costs</h1><div class="placeholder-card" data-i18n>🏦 Coming soon</div></section>
+    <section class="chapter-panel" id="chapter-ias33"><h1 data-i18n>IAS 33 — Earnings Per Share</h1><div class="placeholder-card" data-i18n>📊 Coming soon</div></section>
+    <section class="chapter-panel" id="chapter-ias36"><h1 data-i18n>IAS 36 — Impairment of Assets</h1><div class="placeholder-card" data-i18n>⚠️ Coming soon</div></section>
+    <section class="chapter-panel" id="chapter-ias37"><h1 data-i18n>IAS 37 — Provisions, Contingent Liabilities & Assets</h1><div class="placeholder-card" data-i18n>🔮 Coming soon</div></section>
+    <section class="chapter-panel" id="chapter-ias38"><h1 data-i18n>IAS 38 — Intangible Assets</h1><div class="placeholder-card" data-i18n>💡 Coming soon</div></section>
+    <section class="chapter-panel" id="chapter-ias40"><h1 data-i18n>IAS 40 — Investment Property</h1><div class="placeholder-card" data-i18n>🏢 Coming soon</div></section>
+    <section class="chapter-panel" id="chapter-ias41"><h1 data-i18n>IAS 41 — Agriculture</h1><div class="placeholder-card" data-i18n>🌾 Coming soon</div></section>
+    <section class="chapter-panel" id="chapter-ifrs2"><h1 data-i18n>IFRS 2 — Share-based Payment</h1><div class="placeholder-card" data-i18n>📝 Coming soon</div></section>
+    <section class="chapter-panel" id="chapter-ifrs3"><h1 data-i18n>IFRS 3 — Business Combinations</h1><div class="placeholder-card" data-i18n>🤝 Coming soon</div></section>
+    <section class="chapter-panel" id="chapter-ifrs5"><h1 data-i18n>IFRS 5 — Non-current Assets Held for Sale</h1><div class="placeholder-card" data-i18n>🏷️ Coming soon</div></section>
+    <section class="chapter-panel" id="chapter-ifrs6"><h1 data-i18n>IFRS 6 — Exploration for Mineral Resources</h1><div class="placeholder-card" data-i18n>⛏️ Coming soon</div></section>
+    <section class="chapter-panel" id="chapter-ifrs9"><h1 data-i18n>IFRS 9 — Financial Instruments</h1><div class="placeholder-card" data-i18n>💹 Coming soon</div></section>
+    <section class="chapter-panel" id="chapter-ifrs10"><h1 data-i18n>IFRS 10 — Consolidated Financial Statements</h1><div class="placeholder-card" data-i18n>🏛️ Coming soon</div></section>
+    <section class="chapter-panel" id="chapter-ifrs13"><h1 data-i18n>IFRS 13 — Fair Value Measurement</h1><div class="placeholder-card" data-i18n>⚖️ Coming soon</div></section>
+    <section class="chapter-panel" id="chapter-ifrs15"><h1 data-i18n>IFRS 15 — Revenue from Contracts with Customers</h1><div class="placeholder-card" data-i18n>📑 Coming soon</div></section>
+    <section class="chapter-panel" id="chapter-ifrs16"><h1 data-i18n>IFRS 16 — Leases</h1><div class="placeholder-card" data-i18n>🔑 Coming soon</div></section>
 
   </main>
 
+  <script src="js/i18n.js"></script>
   <script src="js/app.js"></script>
   <script src="js/ias2-inventory.js"></script>
   <script src="js/ias1-investment.js"></script>

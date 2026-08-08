@@ -84,7 +84,7 @@
       row.className = 'cf-input-row';
 
       var label = document.createElement('label');
-      label.textContent = f.label;
+      label.textContent = I18N.t(f.label);
       row.appendChild(label);
 
       var inp = document.createElement('input');
@@ -142,11 +142,11 @@
     if (Math.abs(diff) < 0.005) {
       recBlock.className = 'cf-reconcile cf-reconcile-ok';
       recIcon.textContent = '✅';
-      recText.innerHTML = '<strong>Reconciled</strong> — Direct and Indirect methods produce the same operating cash flow.';
+      recText.innerHTML = '<strong>' + I18N.t('Reconciled') + '</strong> ' + I18N.t('— Direct and Indirect methods produce the same operating cash flow.');
     } else {
       recBlock.className = 'cf-reconcile cf-reconcile-err';
       recIcon.textContent = '⚠';
-      recText.innerHTML = '<strong>Difference Detected</strong> &nbsp; Direct OCF: <b>' + fmt(directOCF) + '</b> &nbsp;|&nbsp; Indirect OCF: <b>' + fmt(indirectOCF) + '</b> &nbsp;|&nbsp; Difference: <b>' + fmt(diff) + '</b>';
+      recText.innerHTML = '<strong>' + I18N.t('Difference Detected') + '</strong> &nbsp; ' + I18N.t('Direct OCF') + ': <b>' + fmt(directOCF) + '</b> &nbsp;|&nbsp; ' + I18N.t('Indirect OCF') + ': <b>' + fmt(indirectOCF) + '</b> &nbsp;|&nbsp; ' + I18N.t('Difference') + ': <b>' + fmt(diff) + '</b>';
     }
   }
 
@@ -155,6 +155,16 @@
     if (n == null || isNaN(n)) return '—';
     return Number(n).toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
   }
+
+  // ── Language change handler ─────────────────
+  I18N.onLangChange(function () {
+    renderInputs('cfDirectInputs',    directFields);
+    renderInputs('cfIndirectInputs',  indirectFields);
+    renderInputs('cfInvestingInputs', investingFields);
+    renderInputs('cfFinancingInputs', financingFields);
+    renderInputs('cfCashInputs',      cashFields);
+    recalcAll(); // update reconciliation text
+  });
 
   // ── Start ────────────────────────────────────
   init();

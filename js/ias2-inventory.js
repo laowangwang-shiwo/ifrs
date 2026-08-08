@@ -497,7 +497,7 @@
     var tdDel = ce('td', 'col-del');
     var btnDel = ce('button', 'wb-row-del');
     btnDel.textContent = '×';
-    btnDel.title = 'Delete transaction';
+    btnDel.title = I18N.t('Delete transaction');
     btnDel.addEventListener('click', function () { deleteTx(tx.id); });
     tdDel.appendChild(btnDel);
     row.appendChild(tdDel);
@@ -509,11 +509,11 @@
     var td = ce('td', 'col-type');
     var sel = ce('select', 'wb-select');
     var types = [
-      {v:'OPEN',       t:'OPEN — Opening Inventory'},
-      {v:'PURCHASE',   t:'PURCHASE — Purchase'},
-      {v:'SALE',       t:'SALE — Sale'},
-      {v:'DAMAGE',     t:'DAMAGE — Loss / Scrap'},
-      {v:'WRITE_DOWN', t:'WRITE-DOWN — IAS 2 Impairment'}
+      {v:'OPEN',       t: I18N.t('OPEN — Opening Inventory')},
+      {v:'PURCHASE',   t: I18N.t('PURCHASE — Purchase')},
+      {v:'SALE',       t: I18N.t('SALE — Sale')},
+      {v:'DAMAGE',     t: I18N.t('DAMAGE — Loss / Scrap')},
+      {v:'WRITE_DOWN', t: I18N.t('WRITE-DOWN — IAS 2 Impairment')}
     ];
     types.forEach(function (opt) {
       var o = ce('option');
@@ -546,7 +546,7 @@
 
       if (idx > 0 && tx.date < transactions[idx - 1].date) {
         inp.classList.add('wb-input-error');
-        inp.title = 'Transaction date cannot be earlier than the previous row.';
+        inp.title = I18N.t('Transaction date cannot be earlier than the previous row.');
       } else {
         inp.classList.remove('wb-input-error');
         inp.title = '';
@@ -630,7 +630,7 @@
     inp.type = 'number';
     inp.step = '0.01';
     inp.min = '0';
-    inp.placeholder = tx.type === 'DAMAGE' ? 'N/A' : (tx.type === 'WRITE_DOWN' ? 'Write-down amount' : '0.00');
+    inp.placeholder = tx.type === 'DAMAGE' ? I18N.t('N/A') : (tx.type === 'WRITE_DOWN' ? I18N.t('Write-down amount') : '0.00');
 
     if (tx.unitPrice !== '' && tx.unitPrice != null) inp.value = tx.unitPrice;
 
@@ -756,7 +756,7 @@
       td.style.textAlign = 'center';
       td.style.color = '#94a3b8';
       td.style.padding = '16px';
-      td.textContent = 'No remaining layers';
+      td.textContent = I18N.t('No remaining layers');
       tr.appendChild(td);
       layersTbody.appendChild(tr);
       return;
@@ -774,7 +774,7 @@
     // Total row
     var trTotal = ce('tr');
     trTotal.className = 'wb-layers-total';
-    trTotal.appendChild(buildTd('Total', true));
+    trTotal.appendChild(buildTd(I18N.t('Total'), true));
     trTotal.appendChild(buildTd(fmtInt(layersTotalQty(layers)), true));
     trTotal.appendChild(buildTd('', true));
     trTotal.appendChild(buildTd(fmt(layersTotalVal(layers)), true));
@@ -793,15 +793,25 @@
   function formatPeriodLabel(key, method) {
     if (method === 'wa-weekly') {
       var parts = key.split('-W');
+      if (I18N.lang === 'zh') {
+        return parts[0] + '年第' + parts[1] + '周';
+      }
       return 'Week ' + parts[1] + ' ' + parts[0];
     }
     if (method === 'wa-monthly') {
       var months = ['January','February','March','April','May','June',
                     'July','August','September','October','November','December'];
+      var zhMonths = ['1月','2月','3月','4月','5月','6月',
+                      '7月','8月','9月','10月','11月','12月'];
       var p = key.split('-');
-      return months[parseInt(p[1], 10) - 1] + ' ' + p[0];
+      var mi = parseInt(p[1], 10) - 1;
+      if (I18N.lang === 'zh') {
+        return p[0] + '年' + zhMonths[mi];
+      }
+      return months[mi] + ' ' + p[0];
     }
     // yearly or fallback
+    if (I18N.lang === 'zh') return key + '年';
     return key;
   }
 
@@ -830,12 +840,12 @@
       html += '<span class="wb-period-arrow">▸</span> ' + label;
       html += '</div>';
       html += '<div class="wb-period-metrics">';
-      html += buildMetric('Average Cost',              fmt(p.avgCost));
-      html += buildMetric('Revenue',                   fmt(p.revenue));
-      html += buildMetric('COGS',                      fmt(p.cogs));
-      html += buildMetric('Gross Profit',              fmt(p.grossProfit));
-      html += buildMetric('Ending Inventory Quantity', fmtInt(p.endQty));
-      html += buildMetric('Ending Inventory Value',    fmt(p.endVal));
+      html += buildMetric(I18N.t('Average Cost'),              fmt(p.avgCost));
+      html += buildMetric(I18N.t('Revenue'),                   fmt(p.revenue));
+      html += buildMetric(I18N.t('COGS'),                      fmt(p.cogs));
+      html += buildMetric(I18N.t('Gross Profit'),              fmt(p.grossProfit));
+      html += buildMetric(I18N.t('Ending Inventory Quantity'), I18N.fmtInt(p.endQty));
+      html += buildMetric(I18N.t('Ending Inventory Value'),    fmt(p.endVal));
       html += '</div></div>';
     });
 
@@ -863,10 +873,10 @@
 
     var warnings = [];
     if (invResult.hasShortfall) {
-      warnings.push('<strong>⚠ Insufficient inventory.</strong> Sale or damage quantity exceeds available stock. The excess units were not fulfilled — review transaction quantities.');
+      warnings.push('<strong>' + I18N.t('⚠ Insufficient inventory.') + '</strong> ' + I18N.t('Sale or damage quantity exceeds available stock. The excess units were not fulfilled — review transaction quantities.'));
     }
     if (invResult.hasNegative) {
-      warnings.push('<strong>⚠ Negative inventory detected.</strong> Some transactions have caused inventory quantity to drop below zero. Review sale and damage quantities.');
+      warnings.push('<strong>' + I18N.t('⚠ Negative inventory detected.') + '</strong> ' + I18N.t('Some transactions have caused inventory quantity to drop below zero. Review sale and damage quantities.'));
     }
     showWarning(warnings);
   }
@@ -877,6 +887,12 @@
     if (cls) el.className = cls;
     return el;
   }
+
+  // ── Language change handler ─────────────────
+  I18N.onLangChange(function () {
+    renderAllRows();
+    recalcAndUpdate();
+  });
 
   // ── Start ────────────────────────────────────
   init();
